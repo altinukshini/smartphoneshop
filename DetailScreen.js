@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Alert, Image, Text} from 'react-native';
-import { Container, Content, Button } from 'native-base';
+import { Container, Content, Button, Header, Title, Left, Right, Icon, Body } from 'native-base';
 
 export default class DetailScreen extends React.Component {
 
@@ -11,8 +11,23 @@ export default class DetailScreen extends React.Component {
     render() {
         return (
             <Container>
+                <Header>
+                    <Left>
+                        <Button transparent onPress={this.goToList.bind(this)}>
+                            <Icon name='arrow-back' />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title>Item details</Title>
+                    </Body>
+                    <Right>
+                        <Button transparent>
+                            <Icon name='heart' title="Favorite" />
+                        </Button>
+                    </Right>
+                </Header>
                 <Content contentContainerStyle={style.content}>
-                    <Text>This is Detail Screen</Text>
+                    <Text>This is product details screen</Text>
                     <Button block primary onPress={this.goToList.bind(this)} title="Go to list screen" style={style.button}>
                         <Text style={style.buttonText}>Go to list screen</Text>
                     </Button>

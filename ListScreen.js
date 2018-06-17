@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Alert, Console, Image} from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
-// import firebase from "firebase";
+import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Left } from 'native-base';
 import firebase from './Config';
 
 export default class ListScreen extends React.Component {
@@ -67,6 +66,17 @@ export default class ListScreen extends React.Component {
     render() {
         return (
             <Container>
+                <Header>
+                    <Left>
+                        <Button transparent>
+                            <Icon name='menu' />
+                        </Button>
+                    </Left>
+                    <Body>
+                    <Title>Products</Title>
+                    </Body>
+                    <Right />
+                </Header>
                 <Content contentContainerStyle={style.content}>
                     {this.productList()}
                 </Content>
