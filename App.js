@@ -6,11 +6,6 @@ import SignUpScreen from "./SignUpScreen";
 import StyleWrapper from './StyleWrapper';
 import IntroScreen from "./IntroScreen";
 
-
-// import firebase from 'firebase';
-// import firebase from './Config';
-// firebase.initializeApp(Config.firebaseConfig);
-
 class App extends Component {
     render() {
         return (

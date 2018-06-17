@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Alert, Console, Image} from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Left } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
 import firebase from './Config';
 
 export default class ListScreen extends React.Component {
