@@ -374,6 +374,7 @@ export default (variables = variable) => {
     paddingRight: 10,
     justifyContent: "center",
     paddingTop: platform === "ios" ? 18 : 0,
+    marginTop: platform === "ios" ? 0 : 0 + StatusBar.currentHeight,
     borderBottomWidth:
       platform === "ios" ? 1 / PixelRatio.getPixelSizeForLayoutSize(1) : 0,
     borderBottomColor: variables.toolbarDefaultBorder,

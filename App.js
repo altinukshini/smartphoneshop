@@ -8,8 +8,6 @@ import IntroScreen from "./IntroScreen";
 import { Font, AppLoading } from "expo";
 import { Root } from "native-base";
 
-
-
 class App extends Component {
 
     constructor(props) {

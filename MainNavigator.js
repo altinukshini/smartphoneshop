@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import ProductsList from "./ProductsList";
 import SettingsScreen from "./SettingsScreen";
 import DetailScreen from "./DetailScreen";
-import { DrawerNavigator } from 'react-navigation';
+import { DrawerNavigator, createDrawerNavigator } from 'react-navigation';
 
 import SideMenu from './SideMenu';
 
-export default DrawerNavigator({
+export default createDrawerNavigator({
     Products: { screen: ProductsList },
     Settings: { screen: SettingsScreen },
     Detail: { screen: DetailScreen }

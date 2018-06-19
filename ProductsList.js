@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Alert, Console, Image} from 'react-native';
+import {StyleSheet, View, Alert, Console, Image} from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
 import firebase from './Config';
 import {NavigationActions} from "react-navigation";
@@ -17,6 +17,7 @@ export default class ProductsList extends React.Component {
 
     componentDidMount() {
         // Alert.alert("A " + this.props.navigation.state[0]);
+        console.log(this.props.navigation);
 
         var itemsRef = firebase.database().ref('products');
         itemsRef.on('value', (snapshot) => {
@@ -80,7 +81,7 @@ export default class ProductsList extends React.Component {
             <Container>
                 <Header>
                     <Left>
-                        <Button transparent onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+                        <Button transparent onPress={() => this.props.navigation.openDrawer()}>
                             <Icon name='menu' />
                         </Button>
                     </Left>
@@ -98,7 +99,7 @@ export default class ProductsList extends React.Component {
 }
 
 const style = StyleSheet.create({
-    content: {
+    container: {
         // flex: 1,
         // justifyContent: 'center',
         // alignItems: 'center'
