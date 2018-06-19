@@ -56,7 +56,7 @@ export default class LoginScreen extends React.Component {
                                 width: 100,
                                 borderRadius: 75,
                                 justifyContent: 'center',
-                                alignItems: 'center'}} source={require('./assets/twitter.png')} />
+                                alignItems: 'center'}} source={require('./assets/ssh.png')} />
                             <Item floatingLabel >
                                 <Label>Email</Label>
                                 <Input autoCapitalize="none" autoCorrect={false} style={style.textInput} onChangeText={this.onEmailInputChanged.bind(this)}/>

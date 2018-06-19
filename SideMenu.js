@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import { DrawerItems } from 'react-navigation';
-import { Container, Content, Body, Header, Button, Text } from 'native-base'
+import { Container, Content, Body, Header, Button, Text, Footer } from 'native-base'
 import {Alert, AsyncStorage, Image, StyleSheet } from 'react-native';
 
 export default class SideMenu extends Component {
@@ -30,7 +30,6 @@ export default class SideMenu extends Component {
 
             }
         }.bind(this));
-
     }
 
 
@@ -39,22 +38,23 @@ export default class SideMenu extends Component {
             <Container contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                 <Header style={this.state.nightModeChecked ? NightStyleHeader.headerStyle : DayStyleHeader.headerStyle}>
                     <Body style={styles.menuHeaderBody}>
-                        <Image style={styles.menuLogo} source={require('./assets/twitter.png')} />
+                        <Image style={styles.menuLogo} source={require('./assets/ssh.png')} />
                     </Body>
                 </Header>
                 <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                     {/*<DrawerItems {...this.props}/>*/}
-                    <Button transparent light onPress={() => this.props.navigation.navigate('Products')}>
+                    <Button transparent full light onPress={() => this.props.navigation.navigate('Products')}>
                         <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Products</Text>
                     </Button>
-                    <Button transparent light onPress={() => this.props.navigation.navigate('Settings')}>
+                    <Button transparent full light onPress={() => this.props.navigation.navigate('Settings')}>
                         <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Settings</Text>
                     </Button>
-                    <Text></Text>
-                    <Button transparent light onPress={() => this.props.navigation.navigate('Signout')}>
-                        <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Singout</Text>
-                    </Button>
                 </Content>
+                <Footer>
+                    <Button full transparent light onPress={() => this.props.navigation.navigate('Signout')}>
+                        <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Signout</Text>
+                    </Button>
+                </Footer>
             </Container>
         );
     }
@@ -108,7 +108,7 @@ const NightStyle = StyleSheet.create({
         color: "#94e1b1"
     },
     drawerButton: {
-        color: "white"
+        color: "white",
     },
     buttons:
     {
