@@ -1,6 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, Alert, Image, Text, Dimensions, AsyncStorage} from 'react-native';
 import { Container, Content, Button, Header, Title, Left, Right, Icon, Body, Footer, FooterTab } from 'native-base';
+import { Video } from 'expo';
+import VideoPlayer from '@expo/videoplayer';
 
 export default class DetailScreen extends React.Component {
 
@@ -75,6 +77,18 @@ export default class DetailScreen extends React.Component {
                     <Text></Text>
                     <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}><Text style={style.label}>Description: </Text>{product["description"]}</Text>
                     <Text></Text>
+                    <Text></Text>
+                    <VideoPlayer
+                        videoProps={{
+                            shouldPlay: false,
+                            resizeMode: Video.RESIZE_MODE_CONTAIN,
+                            source: {
+                                uri: 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8',
+                            },
+                        }}
+                        isPortrait={true}
+                        playFromPositionMillis={0}
+                    />
                 </Content>
                 <Footer>
                     <FooterTab>

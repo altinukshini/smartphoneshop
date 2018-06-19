@@ -43,16 +43,16 @@ export default class SideMenu extends Component {
                 </Header>
                 <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                     {/*<DrawerItems {...this.props}/>*/}
-                    <Button transparent full light onPress={() => this.props.navigation.navigate('Products')}>
+                    <Button style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('Products')}>
                         <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Products</Text>
                     </Button>
-                    <Button transparent full light onPress={() => this.props.navigation.navigate('Settings')}>
+                    <Button style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('Settings')}>
                         <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Settings</Text>
                     </Button>
                 </Content>
                 <Footer>
                     <Button full transparent light onPress={() => this.props.navigation.navigate('Signout')}>
-                        <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Signout</Text>
+                        <Text style={this.state.nightModeChecked ? NightStyle.footerButton : DayStyle.footerButton}>Signout</Text>
                     </Button>
                 </Footer>
             </Container>
@@ -80,11 +80,16 @@ let styles = StyleSheet.create({
 });
 
 const DayStyle = StyleSheet.create({
+    footerButton: {
+        color: "white",
+        alignItems: "center"
+    },
     content: {
         flex: 1,
     },
     drawerButton: {
-        color: "black"
+        color: "black",
+        justifyContent: "flex-start"
     },
     buttons:
     {
@@ -102,6 +107,10 @@ const DayStyle = StyleSheet.create({
 })
 
 const NightStyle = StyleSheet.create({
+    footerButton: {
+        color: "white",
+        alignItems: "center"
+    },
     content: {
         flex: 1,
         backgroundColor: '#303033',
@@ -109,6 +118,7 @@ const NightStyle = StyleSheet.create({
     },
     drawerButton: {
         color: "white",
+        justifyContent: "flex-start"
     },
     buttons:
     {
