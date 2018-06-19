@@ -1,21 +1,53 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from "react";
+import { SwitchNavigator } from "react-navigation";
+import MainNavigator from "./MainNavigator";
+import LoginScreen from "./LoginScreen";
+import SignUpScreen from "./SignUpScreen";
+import StyleWrapper from './StyleWrapper';
+import IntroScreen from "./IntroScreen";
+import { Font, AppLoading } from "expo";
+import { Root } from "native-base";
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
-  }
+
+
+class App extends Component {
+
+    constructor(props) {
+      super(props);
+
+      this.state = { loading: true };
+    }
+
+    async componentWillMount() {
+        await Font.loadAsync({
+            Roboto: require("native-base/Fonts/Roboto.ttf"),
+            Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
+        });
+        this.setState({ loading: false });
+    }
+
+    render() {
+        if (this.state.loading) {
+            return (
+                <Root>
+                    <AppLoading />
+                </Root>
+            );
+        }
+        return (
+            <StyleWrapper>
+                <AppNavigator/>
+            </StyleWrapper>);
+        }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const AppNavigator = SwitchNavigator({
+    Intro: { screen: IntroScreen },
+    Login: { screen: LoginScreen },
+    SignUp: { screen: SignUpScreen },
+    Main: { screen: MainNavigator }
+}, {
+    headerMode: 'none'
 });
+
+export default App;
