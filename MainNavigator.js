@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProductsList from "./ProductsList";
 import SettingsScreen from "./SettingsScreen";
 import DetailScreen from "./DetailScreen";
+import SignoutScreen from './SignoutScreen';
 import { DrawerNavigator, createDrawerNavigator } from 'react-navigation';
 
 import SideMenu from './SideMenu';
@@ -9,7 +10,8 @@ import SideMenu from './SideMenu';
 export default createDrawerNavigator({
     Products: { screen: ProductsList },
     Settings: { screen: SettingsScreen },
-    Detail: { screen: DetailScreen }
+    Detail: { screen: DetailScreen },
+    Signout: { screen: SignoutScreen }
 }, {
     headerMode: 'none',
     initialRouteName: 'Products',

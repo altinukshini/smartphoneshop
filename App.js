@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { SwitchNavigator } from "react-navigation";
+import { SwitchNavigator, createSwitchNavigator } from "react-navigation";
 import MainNavigator from "./MainNavigator";
 import LoginScreen from "./LoginScreen";
 import SignUpScreen from "./SignUpScreen";
@@ -39,7 +39,7 @@ class App extends Component {
         }
 }
 
-const AppNavigator = SwitchNavigator({
+const AppNavigator = createSwitchNavigator({
     Intro: { screen: IntroScreen },
     Login: { screen: LoginScreen },
     SignUp: { screen: SignUpScreen },

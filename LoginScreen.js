@@ -52,6 +52,11 @@ export default class LoginScreen extends React.Component {
                     </Header>
                     <Content contentContainerStyle={style.content}>
                         <Form style={style.form}>
+                            <Image style={{height: 100,
+                                width: 100,
+                                borderRadius: 75,
+                                justifyContent: 'center',
+                                alignItems: 'center'}} source={require('./assets/twitter.png')} />
                             <Item floatingLabel >
                                 <Label>Email</Label>
                                 <Input autoCapitalize="none" autoCorrect={false} style={style.textInput} onChangeText={this.onEmailInputChanged.bind(this)}/>

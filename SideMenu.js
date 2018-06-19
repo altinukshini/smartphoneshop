@@ -2,19 +2,61 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import { DrawerItems } from 'react-navigation';
 import { Container, Content, Body, Header} from 'native-base'
-import {Image, StyleSheet} from 'react-native';
+import {Alert, AsyncStorage, Image, StyleSheet} from 'react-native';
 
 export default class SideMenu extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            settings: {
+                darkmode: false
+            },
+            bgColor: "#fff"
+        };
+    }
+
+    componentDidMount() {
+        let newSettings = this.getSettingsFromStorage();
+
+        this.setState({
+            settings: newSettings
+        });
+
+        if (newSettings.darkmode === true){
+            this.setState({
+                bgColor: "#999"
+            });
+        } else {
+            this.setState({
+                bgColor: "#fff"
+            });
+        }
+    }
+
+    async getSettingsFromStorage() {
+        try {
+            let value = await AsyncStorage.getItem('settings');
+            value = JSON.parse(value);
+            return value.darkmode;
+        }
+        catch (error){
+            Alert.alert(error);
+        }
+    }
+
     render () {
+        const {color} = this.state.bgColor;
+        const {bgSetting} = this.getSettingsFromStorage() ? '#fff' : '#999';
         return (
-            <Container>
+            <Container contentContainerStyle={{backgroundColor: bgSetting}} style={{backgroundColor: bgSetting}}>
                 <Header style={styles.menuHeader}>
                     <Body style={styles.menuHeaderBody}>
                         <Image style={styles.menuLogo} source={require('./assets/twitter.png')} />
                     </Body>
                 </Header>
-                <Content>
+                <Content contentContainerStyle={{backgroundColor: bgSetting}}>
                     <DrawerItems {...this.props}/>
                 </Content>
             </Container>
@@ -26,7 +68,7 @@ SideMenu.propTypes = {
     navigation: PropTypes.object
 };
 
-const styles = StyleSheet.create({
+let styles = StyleSheet.create({
     menuHeader:{
         height: 150,
         backgroundColor: "#fff",

@@ -1,9 +1,7 @@
 import React from 'react';
-import {StyleSheet, View, Alert, Console, Image} from 'react-native';
+import {StyleSheet, View, Alert, Console, Image, AsyncStorage} from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
 import firebase from './Config';
-import {NavigationActions} from "react-navigation";
-import SideMenu from "./SideMenu";
 
 export default class ProductsList extends React.Component {
 
@@ -11,13 +9,27 @@ export default class ProductsList extends React.Component {
         super();
 
         this.state = {
-            items: []
+            items: [],
+            settings: {
+                darkmode: false
+            }
         };
     }
 
+    async getSettingsFromStorage() {
+        try {
+            let value = await AsyncStorage.getItem('settings');
+            value = JSON.parse(value);
+            return value.darkmode;
+        }
+        catch (error){
+            Alert.alert(error);
+        }
+    }
+
     componentDidMount() {
-        // Alert.alert("A " + this.props.navigation.state[0]);
-        console.log(this.props.navigation);
+
+        let newSettings = this.getSettingsFromStorage();
 
         var itemsRef = firebase.database().ref('products');
         itemsRef.on('value', (snapshot) => {
@@ -26,29 +38,20 @@ export default class ProductsList extends React.Component {
             var newList = Object.values(products);
 
             this.setState({
-                items: newList
+                items: newList,
+                settings: newSettings
             });
 
         });
 
     }
 
-    // navigateToScreen = (route) => () => {
-    //     const navigateAction = NavigationActions.navigate({
-    //         routeName: route
-    //     });
-    //     this.props.navigation.dispatch(navigateAction);
-    // }
-
-    goToDetail() {
-        this.props.navigation.navigate("Detail");
-    }
-
     productList() {
         return this.state.items.map((product, index) => {
+            const {bgColor} = this.getSettingsFromStorage() ? '#888' : '#fff';
             return(
-                <Card>
-                    <CardItem>
+                <Card style={{backgroundColor: bgColor}}>
+                    <CardItem style={{backgroundColor: bgColor}}>
                         <Left>
                             <Thumbnail source={{uri: product["image"]}} />
                             <Body>
@@ -57,12 +60,12 @@ export default class ProductsList extends React.Component {
                             </Body>
                         </Left>
                     </CardItem>
-                    <CardItem cardBody>
+                    <CardItem cardBody style={{backgroundColor: bgColor}}>
                         <Image source={{uri: product["image"]}} style={{height: 200, width: null, flex: 1}}/>
                     </CardItem>
-                    <CardItem>
+                    <CardItem style={{backgroundColor: bgColor}}>
                         <Body>
-                        <Button onPress={this.goToDetail.bind(this)} title="View item">
+                        <Button onPress={() => this.props.navigation.navigate("Detail", {product: product})} title="View item">
                             <Text>View item</Text>
                         </Button>
                         </Body>
@@ -77,6 +80,9 @@ export default class ProductsList extends React.Component {
 
     render() {
 
+
+        let bgColor = this.getSettingsFromStorage() ? '#fff' : '#fff';
+
         return (
             <Container>
                 <Header>
@@ -90,7 +96,7 @@ export default class ProductsList extends React.Component {
                     </Body>
                     <Right />
                 </Header>
-                <Content contentContainerStyle={style.content}>
+                <Content contentContainerStyle={{backgroundColor: bgColor}}>
                     {this.productList()}
                 </Content>
             </Container>
@@ -99,11 +105,6 @@ export default class ProductsList extends React.Component {
 }
 
 const style = StyleSheet.create({
-    container: {
-        // flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center'
-    },
     price: {
         fontSize: 25
     }

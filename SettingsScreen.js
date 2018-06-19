@@ -11,14 +11,68 @@ import {
 
 export default class SettingsScreen extends Component {
 
-    saveData() {
-        let user = 'Altin Ukshini';
-        AsyncStorage.setItem('user', user);
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            settings: {
+                darkmode: false
+            }
+        };
     }
 
-    showData() {
-        let user = AsyncStorage.getItem('user')
-        Alert.alert(toString(user));
+    componentDidMount() {
+
+        let newSettings = this.getSettingsFromStorage()
+
+        this.setState({
+            settings: {
+                darkmode: newSettings.darkmode
+            }
+        });
+
+    }
+
+
+    saveData(key, value) {
+        AsyncStorage.setItem(key, value).then(() => console.log("##### DATA SAVED #####" + value.toString()));
+    }
+
+    async showData() {
+        try {
+            let value = await AsyncStorage.getItem('settings');
+            value = JSON.parse(value);
+            Alert.alert("Darkmode: " + value.darkmode.toString());
+        }
+        catch (error){
+            Alert.alert(error);
+        }
+    }
+
+    async getSettingsFromStorage() {
+        try {
+            let value = await AsyncStorage.getItem('settings');
+            value = JSON.parse(value);
+            return value;
+        }
+        catch (error){
+            Alert.alert(error);
+        }
+    }
+
+    changeValue() {
+        let settings = this.state.settings;
+
+        if (settings.darkmode == true) {
+            settings.darkmode = false;
+        } else {
+            settings.darkmode = true;
+        }
+
+        this.saveData('settings', JSON.stringify(settings));
+        this.setState({
+            settings: settings
+        });
     }
 
     render() {
@@ -38,27 +92,14 @@ export default class SettingsScreen extends Component {
                 </Header>
                 <Content>
                     <ListItem>
-                        <CheckBox/>
+                        <CheckBox checked={this.state.settings.darkmode} onPress={() => this.changeValue()}/>
                         <Body>
                         <Text>Dark mode</Text>
                         </Body>
                     </ListItem>
-                    <Button primary onPress={this.saveData()}>
-                        <Text>Save data</Text>
-                    </Button>
-                    <Button primary onPress={this.showData()}>
+                    <Button primary onPress={() => this.showData()}>
                         <Text>Show data</Text>
                     </Button>
-                    <Form>
-                        <Item floatingLabel>
-                            <Label>Username</Label>
-                            <Input />
-                        </Item>
-                        <Item floatingLabel last>
-                            <Label>Password</Label>
-                            <Input />
-                        </Item>
-                    </Form>
                 </Content>
             </Container>
         );
