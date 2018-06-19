@@ -1,27 +1,21 @@
-import React, { Component } from "react";
-import { SwitchNavigator } from "react-navigation";
-import MainNavigator from "./MainNavigator";
-import LoginScreen from "./LoginScreen";
-import SignUpScreen from "./SignUpScreen";
-import StyleWrapper from './StyleWrapper';
-import IntroScreen from "./IntroScreen";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
-class App extends Component {
-    render() {
-        return (
-            <StyleWrapper>
-                <AppNavigator/>
-            </StyleWrapper>);
-    }
+export default class App extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>Open up App.js to start working on your app!</Text>
+      </View>
+    );
+  }
 }
 
-const AppNavigator = SwitchNavigator({
-    Intro: { screen: IntroScreen },
-    Login: { screen: LoginScreen },
-    SignUp: { screen: SignUpScreen },
-    Main: { screen: MainNavigator }
-}, {
-    headerMode: 'none'
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
-
-export default App;
