@@ -49,6 +49,18 @@ export default class SideMenu extends Component {
                     <Button transparent full light onPress={() => this.props.navigation.navigate('Settings')}>
                         <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Settings</Text>
                     </Button>
+                    <Button transparent full light onPress={() => this.props.navigation.navigate('Camera')}>
+                        <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Camera</Text>
+                    </Button>
+                    <Button transparent full light onPress={() => this.props.navigation.navigate('ImagePicker')}>
+                        <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Image Picker</Text>
+                    </Button>
+                    <Button transparent full light onPress={() => this.props.navigation.navigate('CreateItemScreen')}>
+                        <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Create Item</Text>
+                    </Button>
+
+
+
                 </Content>
                 <Footer>
                     <Button full transparent light onPress={() => this.props.navigation.navigate('Signout')}>
