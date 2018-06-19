@@ -50,4 +50,9 @@ const AppNavigator = SwitchNavigator({
     headerMode: 'none'
 });
 
+import { YellowBox } from 'react-native';
+YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
+console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
+console.disableYellowBox = true;
+
 export default App;
