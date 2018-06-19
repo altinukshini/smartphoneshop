@@ -7,30 +7,33 @@ export default class ProductsList extends React.Component {
 
     constructor() {
         super();
-
         this.state = {
             items: [],
-            settings: {
-                darkmode: false
-            }
+            nightModeChecked: false,
+            animationChecked: false
         };
     }
 
-    async getSettingsFromStorage() {
-        try {
-            let value = await AsyncStorage.getItem('settings');
-            value = JSON.parse(value);
-            return value.darkmode;
-        }
-        catch (error){
-            Alert.alert(error);
-        }
+    componentWillMount() {
+        AsyncStorage.getItem("nightModeChecked", function (err, result) {
+            console.log(result);
+            if (result == 'true') {
+                this.setState({
+                    nightModeChecked: true
+                });
+
+            }
+            if (result == 'false') {
+                this.setState({
+                    nightModeChecked: false
+                });
+
+            }
+        }.bind(this));
+
     }
 
     componentDidMount() {
-
-        let newSettings = this.getSettingsFromStorage();
-
         var itemsRef = firebase.database().ref('products');
         itemsRef.on('value', (snapshot) => {
             var products = snapshot.val();
@@ -38,39 +41,37 @@ export default class ProductsList extends React.Component {
             var newList = Object.values(products);
 
             this.setState({
-                items: newList,
-                settings: newSettings
+                items: newList
             });
 
         });
-
     }
 
     productList() {
         return this.state.items.map((product, index) => {
-            const {bgColor} = this.getSettingsFromStorage() ? '#888' : '#fff';
+
             return(
-                <Card style={{backgroundColor: bgColor}}>
-                    <CardItem style={{backgroundColor: bgColor}}>
+                <Card style={this.state.nightModeChecked ? NightStyle.cardStyle : DayStyle.cardStyle}>
+                    <CardItem style={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                         <Left>
                             <Thumbnail source={{uri: product["image"]}} />
                             <Body>
-                            <Text>{product["name"]}</Text>
-                            <Text note>{product["seller"] + " - " + product["seller_contact"]}</Text>
+                            <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>{product["name"]}</Text>
+                            <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle} note>{product["seller"] + " - " + product["seller_contact"]}</Text>
                             </Body>
                         </Left>
                     </CardItem>
-                    <CardItem cardBody style={{backgroundColor: bgColor}}>
+                    <CardItem cardBody style={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                         <Image source={{uri: product["image"]}} style={{height: 200, width: null, flex: 1}}/>
                     </CardItem>
-                    <CardItem style={{backgroundColor: bgColor}}>
+                    <CardItem style={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                         <Body>
-                        <Button onPress={() => this.props.navigation.navigate("Detail", {product: product})} title="View item">
+                        <Button style={this.state.nightModeChecked ? NightStyle.buttons : DayStyle.buttons} onPress={() => this.props.navigation.navigate("Detail", {product: product})} title="View item">
                             <Text>View item</Text>
                         </Button>
                         </Body>
                         <Right>
-                            <Text style={style.price}>{product["price"]} EUR</Text>
+                            <Text style={this.state.nightModeChecked ? NightStyle.price : DayStyle.price}>{product["price"]} EUR</Text>
                         </Right>
                     </CardItem>
                 </Card>
@@ -80,23 +81,20 @@ export default class ProductsList extends React.Component {
 
     render() {
 
-
-        let bgColor = this.getSettingsFromStorage() ? '#fff' : '#fff';
-
         return (
-            <Container>
-                <Header>
+            <Container contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
+                <Header style={this.state.nightModeChecked ? NightStyleHeader.headerStyle : DayStyleHeader.headerStyle}>
                     <Left>
                         <Button transparent onPress={() => this.props.navigation.openDrawer()}>
                             <Icon name='menu' />
                         </Button>
                     </Left>
                     <Body>
-                    <Title>Products</Title>
+                    <Title style={this.state.nightModeChecked ? NightStyleHeader.textStyle : NightStyleHeader.textStyle}>Products</Title>
                     </Body>
                     <Right />
                 </Header>
-                <Content contentContainerStyle={{backgroundColor: bgColor}}>
+                <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                     {this.productList()}
                 </Content>
             </Container>
@@ -104,9 +102,65 @@ export default class ProductsList extends React.Component {
     }
 }
 
-const style = StyleSheet.create({
-    price: {
+const DayStyle = StyleSheet.create({
+    content: {
+        // flex: 1,
+    },
+    buttons:
+    {
+        color: '#94e1b1'
+    },
+    textStyle:
+    {
+        color: 'black'
+    },
+    cardStyle: {
+    },
+    price:{
         fontSize: 25
+    }
+})
+
+const NightStyle = StyleSheet.create({
+    content: {
+        // flex: 1,
+        backgroundColor: '#303033',
+        color: "#94e1b1"
+    },
+    buttons:
+    {
+        color: '#94e1b1'
+    },
+    textStyle:
+    {
+        color: 'white'
+    },
+    cardStyle: {
+        backgroundColor: '#303033',
+        borderColor: "#333"
+    },
+    price: {
+        fontSize: 25,
+        color: "white"
+    }
+
+})
+const DayStyleHeader = StyleSheet.create({
+    headerStyle: {
+        color: "white"
+    },
+    textStyle: {
+        color: "white"
+    }
+});
+
+const NightStyleHeader = StyleSheet.create({
+    headerStyle: {
+        color: "white",
+        backgroundColor: "#222326"
+    },
+    textStyle: {
+        color: "white"
     }
 });
 

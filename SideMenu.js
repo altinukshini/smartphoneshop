@@ -1,63 +1,59 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import { DrawerItems } from 'react-navigation';
-import { Container, Content, Body, Header} from 'native-base'
-import {Alert, AsyncStorage, Image, StyleSheet} from 'react-native';
+import { Container, Content, Body, Header, Button, Text } from 'native-base'
+import {Alert, AsyncStorage, Image, StyleSheet } from 'react-native';
 
 export default class SideMenu extends Component {
 
-    constructor(props) {
-        super(props);
-
+    constructor() {
+        super();
         this.state = {
-            settings: {
-                darkmode: false
-            },
-            bgColor: "#fff"
+            nightModeChecked: false,
+            animationChecked: false
         };
     }
 
-    componentDidMount() {
-        let newSettings = this.getSettingsFromStorage();
+    componentWillMount() {
+        AsyncStorage.getItem("nightModeChecked", function (err, result) {
+            console.log(result);
+            if (result == 'true') {
+                this.setState({
+                    nightModeChecked: true
+                });
 
-        this.setState({
-            settings: newSettings
-        });
+            }
+            if (result == 'false') {
+                this.setState({
+                    nightModeChecked: false
+                });
 
-        if (newSettings.darkmode === true){
-            this.setState({
-                bgColor: "#999"
-            });
-        } else {
-            this.setState({
-                bgColor: "#fff"
-            });
-        }
+            }
+        }.bind(this));
+
     }
 
-    async getSettingsFromStorage() {
-        try {
-            let value = await AsyncStorage.getItem('settings');
-            value = JSON.parse(value);
-            return value.darkmode;
-        }
-        catch (error){
-            Alert.alert(error);
-        }
-    }
 
     render () {
-        const {color} = this.state.bgColor;
-        const {bgSetting} = this.getSettingsFromStorage() ? '#fff' : '#999';
         return (
-            <Container contentContainerStyle={{backgroundColor: bgSetting}} style={{backgroundColor: bgSetting}}>
-                <Header style={styles.menuHeader}>
+            <Container contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
+                <Header style={this.state.nightModeChecked ? NightStyleHeader.headerStyle : DayStyleHeader.headerStyle}>
                     <Body style={styles.menuHeaderBody}>
                         <Image style={styles.menuLogo} source={require('./assets/twitter.png')} />
                     </Body>
                 </Header>
-                <Content contentContainerStyle={{backgroundColor: bgSetting}}>
-                    <DrawerItems {...this.props}/>
+                <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
+                    {/*<DrawerItems {...this.props}/>*/}
+                    <Button transparent light onPress={() => this.props.navigation.navigate('Products')}>
+                        <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Products</Text>
+                    </Button>
+                    <Button transparent light onPress={() => this.props.navigation.navigate('Settings')}>
+                        <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Settings</Text>
+                    </Button>
+                    <Text></Text>
+                    <Button transparent light onPress={() => this.props.navigation.navigate('Signout')}>
+                        <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Singout</Text>
+                    </Button>
                 </Content>
             </Container>
         );
@@ -69,17 +65,6 @@ SideMenu.propTypes = {
 };
 
 let styles = StyleSheet.create({
-    menuHeader:{
-        height: 150,
-        backgroundColor: "#fff",
-        borderBottomWidth: 1,
-        borderBottomColor: "#ebebeb",
-        backgroundColor: "#ebebeb"
-    },
-    menuHeaderBody: {
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     menuLogo: {
         height: 100,
         width: 100,
@@ -87,8 +72,79 @@ let styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    container: {
-        paddingTop: 20,
-        flex: 1
+
+    menuHeaderBody: {
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
+
+const DayStyle = StyleSheet.create({
+    content: {
+        flex: 1,
+    },
+    drawerButton: {
+        color: "black"
+    },
+    buttons:
+    {
+        color: '#94e1b1'
+    },
+    textStyle:
+    {
+        color: 'black'
+    },
+    cardStyle: {
+    },
+    price:{
+        fontSize: 25
+    }
+})
+
+const NightStyle = StyleSheet.create({
+    content: {
+        flex: 1,
+        backgroundColor: '#303033',
+        color: "#94e1b1"
+    },
+    drawerButton: {
+        color: "white"
+    },
+    buttons:
+    {
+        color: '#94e1b1'
+    },
+    textStyle:
+    {
+        color: 'white'
+    },
+    cardStyle: {
+        backgroundColor: '#303033',
+        borderColor: "#333"
+    },
+    price: {
+        fontSize: 25,
+        color: "white"
+    }
+
+})
+const DayStyleHeader = StyleSheet.create({
+    headerStyle: {
+        height: 150,
+        backgroundColor: "#fff",
+        borderBottomWidth: 1,
+        borderBottomColor: "#ebebeb",
+        backgroundColor: "#ebebeb"
+    }
+});
+
+const NightStyleHeader = StyleSheet.create({
+    headerStyle: {
+        height: 150,
+        backgroundColor: "#fff",
+        borderBottomWidth: 1,
+        borderBottomColor: "#ebebeb",
+        backgroundColor: "#222326"
+    }
+});
+
