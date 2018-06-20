@@ -67,6 +67,9 @@ export default class SideMenu extends Component {
                     <Button style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('Settings')}>
                         <Text style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton}>Settings</Text>
                     </Button>
+                    <Button style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton} transparent full light onPress={() => this.props.navigation.navigate('CreateItemScreen')}>
+                        <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Add product</Text>
+                    </Button>
                 </Content>
                 <Footer>
                     <Button full transparent light onPress={() => this.props.navigation.navigate('Signout')}>
