@@ -37,6 +37,7 @@ class App extends Component {
                 <AppNavigator/>
             </StyleWrapper>);
         }
+
 }
 
 const AppNavigator = createSwitchNavigator({
