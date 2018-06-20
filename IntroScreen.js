@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, AsyncStorage, Text, Button, View, Image, Animated } from 'react-native';
+import { Alert, AsyncStorage, Text, Button, View, Image, Easing ,Animated } from 'react-native';
 import firebase from './Config';
 
 export default class IntroScreen extends React.Component {
@@ -9,39 +9,43 @@ export default class IntroScreen extends React.Component {
 
             this.state = {
                 logoOpacity: new Animated.Value(0),
-                logoBottomPos: new Animated.Value(250),
                 logoScaleX: new Animated.Value(1),
-                logoRotation: new Animated.Value(0)
             }
      }
 
     componentDidMount() {
         firebase.auth().onAuthStateChanged(user => {
-            if (user != null)
-                Animated.parallel([
+            if (user != null) {
+
+                Animated.sequence([
                     Animated.timing(
                         this.state.logoOpacity,
                         {
-                            duration: 2000,
+                            duration: 1000,
                             toValue: 1
                         }
                     ),
-                    Animated.timing(
-                        this.state.logoBottomPos,
+
+                     Animated.timing(
+                        this.state.logoOpacity,
                         {
                             duration: 1000,
                             toValue: 0
                         }
-                    ),
-                    Animated.timing(
-                        this.state.logoScaleX,
+                     ),
+
+                     Animated.timing(
+                        this.state.logoOpacity,
                         {
-                            duration: 2000,
+                            duration: 1000,
                             toValue: 1
                         }
-                    )
+                    ),
+
 
                 ]).start(this.goToMain.bind(this));
+
+            }
             else
                 this.props.navigation.navigate('Login');
         });
@@ -57,7 +61,6 @@ export default class IntroScreen extends React.Component {
 
                 style={{
                     opacity: this.state.logoOpacity,
-                    bottom: this.state.logoBottomPos,
                     transform: [
                         { scaleX: this.state.logoScaleX }
                     ]
