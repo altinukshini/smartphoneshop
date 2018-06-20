@@ -3,8 +3,7 @@ import ProductsList from "./ProductsList";
 import SettingsScreen from "./SettingsScreen";
 import DetailScreen from "./DetailScreen";
 import SignoutScreen from './SignoutScreen';
-import CameraComponent from './CameraComponent';
-import ImagePicker from './ImagePicker';
+import MyProducts from './MyProducts';
 import CreateItemScreen from './CreateItemScreen';
 import { DrawerNavigator, createDrawerNavigator } from 'react-navigation';
 
@@ -15,9 +14,8 @@ export default createDrawerNavigator({
     Products: { screen: ProductsList },
     Settings: { screen: SettingsScreen },
     Detail: { screen: DetailScreen },
+    MyProducts: { screen: MyProducts },
     Signout: { screen: SignoutScreen },
-    Camera: {screen: CameraComponent},
-    ImagePicker: {screen: ImagePicker},
     CreateItemScreen: {screen: CreateItemScreen}
 }, {
     headerMode: 'none',

@@ -46,7 +46,7 @@ export default class DetailScreenTab1 extends React.Component {
                 <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                     <Card style={this.state.nightModeChecked ? NightStyle.cardStyle : DayStyle.cardStyle}>
                         <CardItem cardBody style={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
-                            <Image source={{uri: product["image"]}} style={{height: 200, padding: 10, width: null, flex: 1}}/>
+                            <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/smartphoneshop-ubt.appspot.com/o/' + product["image"] + '?alt=media'}} style={{height: 200, padding: 10, width: null, flex: 1}}/>
                         </CardItem>
                         <CardItem cardBody style={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                             <Text style={style.title}>{product["name"]}</Text>

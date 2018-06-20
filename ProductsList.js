@@ -10,7 +10,6 @@ export default class ProductsList extends React.Component {
         super();
         this.state = {
             items: [],
-            showToast: false,
             nightModeChecked: false
         };
     }
@@ -70,7 +69,6 @@ export default class ProductsList extends React.Component {
                 <Card style={this.state.nightModeChecked ? NightStyle.cardStyle : DayStyle.cardStyle}>
                     <CardItem style={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                         <Left>
-                            {/*<Thumbnail source={{uri: product["image"]}} />*/}
                             <Gravatar options={{
                                 email: gravatar,
                                 parameters: { "s": "100", "d": "robohash" },
@@ -83,7 +81,7 @@ export default class ProductsList extends React.Component {
                         </Left>
                     </CardItem>
                     <CardItem cardBody style={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
-                        <Image source={{uri: product["image"]}} style={{height: 200, width: null, flex: 1}}/>
+                        <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/smartphoneshop-ubt.appspot.com/o/' + product["image"] + '?alt=media' }} style={{height: 200, width: null, flex: 1}}/>
                     </CardItem>
                     <CardItem style={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                         <Body>

@@ -60,16 +60,20 @@ export default class SideMenu extends Component {
                     </Body>
                 </Header>
                 <Content contentContainerStyle={darkmodestatus ? NightStyle.content : DayStyle.content}>
-                    {/*<DrawerItems {...this.props}/>*/}
                     <Button style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('Products')}>
                         <Text style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton}>Products</Text>
                     </Button>
-                    <Button style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('Settings')}>
-                        <Text style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton}>Settings</Text>
+                    <Button style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('MyProducts')}>
+                        <Text style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton}>My products</Text>
                     </Button>
                     <Button style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton} transparent full light onPress={() => this.props.navigation.navigate('CreateItemScreen')}>
                         <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Add product</Text>
                     </Button>
+                    <Button style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('Settings')}>
+                        <Text style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton}>Settings</Text>
+                    </Button>
+
+
                 </Content>
                 <Footer>
                     <Button full transparent light onPress={() => this.props.navigation.navigate('Signout')}>
