@@ -9,7 +9,7 @@ export default class IntroScreen extends React.Component {
 
         this.state = {
             logoOpacity: new Animated.Value(0),
-            logoScaleX: new Animated.Value(1),
+            logoScaleX: new Animated.Value(0),
         }
     }
 
@@ -56,12 +56,11 @@ export default class IntroScreen extends React.Component {
     render() {
         return (
             <View style={style.container}>
-                <Animated.Image source={require('./assets/ssh.png')}
+                <Animated.Image source={require('./assets/ssh-white.png')}
                     style={{
                         opacity: this.state.logoOpacity,
-                        transform: [
-                            { scaleX: this.state.logoScaleX }
-                        ]
+                        width: 250,
+                        height: 250
                     }}
                 />
             </View>
@@ -73,6 +72,6 @@ const style = {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#fff"
+        backgroundColor: "#3F51B5"
     }
 }

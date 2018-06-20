@@ -10,6 +10,7 @@ export default class ProductsList extends React.Component {
         super();
         this.state = {
             items: [],
+            showToast: false,
             nightModeChecked: false
         };
     }
@@ -44,6 +45,21 @@ export default class ProductsList extends React.Component {
             });
 
         });
+    }
+
+    refresh() {
+        var itemsRef = firebase.database().ref('products');
+        itemsRef.on('value', (snapshot) => {
+            var products = snapshot.val();
+
+            var newList = Object.values(products);
+
+            this.setState({
+                items: newList
+            });
+
+        });
+        Alert.alert("Products refreshed");
     }
 
     productList() {
@@ -97,7 +113,11 @@ export default class ProductsList extends React.Component {
                     <Body>
                     <Title style={this.state.nightModeChecked ? NightStyleHeader.textStyle : NightStyleHeader.textStyle}>Products</Title>
                     </Body>
-                    <Right />
+                    <Right>
+                        <Button transparent onPress={() => this.refresh()}>
+                            <Icon name='sync' />
+                        </Button>
+                    </Right>
                 </Header>
                 <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                     {this.productList()}
