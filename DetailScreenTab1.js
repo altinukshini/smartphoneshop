@@ -151,8 +151,7 @@ const NightStyle = StyleSheet.create({
     content: {
         // flex: 1,
         padding: 10,
-        backgroundColor: '#303033',
-        color: "#94e1b1"
+        backgroundColor: '#303033'
     },
     price:
         {

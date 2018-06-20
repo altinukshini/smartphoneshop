@@ -5,6 +5,7 @@ import { Video } from 'expo';
 import VideoPlayer from '@expo/videoplayer';
 import DetailScreenTab1 from './DetailScreenTab1';
 import DetailScreenTab2 from './DetailScreenTab2';
+import DetailScreenTab3 from './DetailScreenTab3';
 
 export default class DetailScreen extends React.Component {
 
@@ -61,6 +62,9 @@ export default class DetailScreen extends React.Component {
                     </Tab>
                     <Tab heading="Review" tabStyle={this.state.nightModeChecked ? NightStyleHeader.tabStyle : DayStyleHeader.tabStyle} activeTabStyle={this.state.nightModeChecked ? NightStyleHeader.activeTabStyle : DayStyleHeader.activeTabStyle}>
                         <DetailScreenTab2 product={product}/>
+                    </Tab>
+                    <Tab heading="Location" tabStyle={this.state.nightModeChecked ? NightStyleHeader.tabStyle : DayStyleHeader.tabStyle} activeTabStyle={this.state.nightModeChecked ? NightStyleHeader.activeTabStyle : DayStyleHeader.activeTabStyle}>
+                        <DetailScreenTab3 product={product}/>
                     </Tab>
                 </Tabs>
                 <Footer>
