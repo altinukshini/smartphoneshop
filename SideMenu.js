@@ -13,7 +13,7 @@ export default class SideMenu extends Component {
         };
     }
 
-    componentDidMount() {
+    componentWillReceiveProps() {
         AsyncStorage.getItem("nightModeChecked", function (err, result) {
             if (result == 'true') {
                 this.setState({

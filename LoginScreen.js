@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Alert, Image } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text, Body, Title, Right } from 'native-base';
 // import firebase from 'firebase';
-import firebase from './Config'
+import firebase from './Config';
 
 export default class LoginScreen extends React.Component {
 

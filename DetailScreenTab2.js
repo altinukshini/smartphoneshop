@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Alert, Image, Text, Dimensions, AsyncStorage} from 'react-native';
+import {StyleSheet, View, Alert, Image, Text, Dimensions, AsyncStorage, WebView, AppState} from 'react-native';
 import { Container, Content, Button, Header, Title, Left, Right, Icon, Body, Footer, FooterTab } from 'native-base';
 import { Video } from 'expo';
 import VideoPlayer from '@expo/videoplayer';
@@ -9,11 +9,25 @@ export default class DetailScreenTab2 extends React.Component {
     constructor() {
         super();
         this.state = {
-            nightModeChecked: false
+            youtube: null,
+            nightModeChecked: false,
+            appState: AppState.currentState
         };
     }
 
+    componentDidMount(){
+        this.setState({
+            youtube: this.props.product["review_video"]
+        });
+        AppState.addEventListener('change', this._handleAppStateChange);
+    }
+
+    _handleAppStateChange = (nextAppState) => {
+        this.setState({appState: nextAppState});
+    }
+
     componentWillMount() {
+        AppState.removeEventListener('change', this._handleAppStateChange);
         AsyncStorage.getItem("nightModeChecked", function (err, result) {
             if (result == 'true') {
                 this.setState({
@@ -31,32 +45,23 @@ export default class DetailScreenTab2 extends React.Component {
 
     }
 
-    goToList() {
-        this.props.navigation.navigate("Products");
+    returnView(){
+        return(
+            <WebView
+                style={{flex:1}}
+                startInLoadingState
+                scalesPageToFit
+                mediaPlaybackRequiresUserAction={true}
+                javaScriptEnabled={true}
+                source={{uri: 'https://www.youtube.com/embed/'+this.state.youtube+'?rel=0&autoplay=0&showinfo=0&controls=0'}}
+            />
+        );
     }
 
     render() {
-        const product = this.props.product;
-        const dimensions = Dimensions.get('window');
-        const imageWidth = dimensions.width;
-
         return (
-            <Container contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
-                <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
-                    <VideoPlayer style={{flex: 1}}
-                        videoProps={{
-                            shouldPlay: false,
-                            resizeMode: Video.RESIZE_MODE_CONTAIN,
-                            source: {
-                                uri: 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8',
-                            },
-                        }}
-                        isPortrait={true}
-                        playFromPositionMillis={0}
-                    />
-                </Content>
-            </Container>
-        );
+            this.state.appState == 'active' && this.returnView()
+        )
     }
 }
 
