@@ -14,14 +14,12 @@ export default class SettingsScreen extends Component {
     constructor() {
         super();
         this.state = {
-            nightModeChecked: false,
-            animationChecked: false
+            nightModeChecked: false
         };
     }
 
     componentWillMount() {
         AsyncStorage.getItem("nightModeChecked", function (err, result) {
-            console.log(result);
             if (result == 'true') {
                 this.setState({
                     nightModeChecked: true
@@ -41,13 +39,9 @@ export default class SettingsScreen extends Component {
     nighModeToggled() {
 
         if (this.state.nightModeChecked === true) {
-            AsyncStorage.setItem('nightModeChecked', 'false').then((value) => {
-                console.log("#### Storage set: " + value);
-            });
+            AsyncStorage.setItem('nightModeChecked', 'false');
         } else if (this.state.nightModeChecked === false) {
-            AsyncStorage.setItem('nightModeChecked', 'true').then((value) => {
-                console.log("#### Storage set: " + value);
-            });
+            AsyncStorage.setItem('nightModeChecked', 'true');
         }
         this.setState({
             nightModeChecked: !this.state.nightModeChecked
@@ -70,11 +64,11 @@ export default class SettingsScreen extends Component {
                     </Body>
                     <Right />
                 </Header>
-                <Content>
+                <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                     <ListItem>
                         <CheckBox checked={this.state.nightModeChecked} onPress={() => this.nighModeToggled()}/>
                         <Body>
-                        <Text>Dark mode</Text>
+                        <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Dark mode</Text>
                         </Body>
                     </ListItem>
                 </Content>
@@ -86,7 +80,7 @@ export default class SettingsScreen extends Component {
 
 const DayStyle = StyleSheet.create({
     content: {
-        // flex: 1,
+        flex: 1,
     },
     buttons:
         {
@@ -100,7 +94,7 @@ const DayStyle = StyleSheet.create({
 
 const NightStyle = StyleSheet.create({
     content: {
-        // flex: 1,
+        flex: 1,
         backgroundColor: '#303033'
     },
     buttons:

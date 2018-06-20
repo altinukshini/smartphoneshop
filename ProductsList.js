@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Alert, Console, Image, AsyncStorage} from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
 import firebase from './Config';
+import {Gravatar, GravatarApi} from 'react-native-gravatar';
 
 export default class ProductsList extends React.Component {
 
@@ -9,14 +10,12 @@ export default class ProductsList extends React.Component {
         super();
         this.state = {
             items: [],
-            nightModeChecked: false,
-            animationChecked: false
+            nightModeChecked: false
         };
     }
 
     componentWillMount() {
         AsyncStorage.getItem("nightModeChecked", function (err, result) {
-            console.log(result);
             if (result == 'true') {
                 this.setState({
                     nightModeChecked: true
@@ -49,12 +48,18 @@ export default class ProductsList extends React.Component {
 
     productList() {
         return this.state.items.map((product, index) => {
+            let gravatar = product["seller_contact"];
 
             return(
                 <Card style={this.state.nightModeChecked ? NightStyle.cardStyle : DayStyle.cardStyle}>
                     <CardItem style={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                         <Left>
-                            <Thumbnail source={{uri: product["image"]}} />
+                            {/*<Thumbnail source={{uri: product["image"]}} />*/}
+                            <Gravatar options={{
+                                email: gravatar,
+                                parameters: { "s": "100", "d": "robohash" },
+                                secure: true
+                            }} style={styles.roundedProfileImage} />
                             <Body>
                             <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>{product["name"]}</Text>
                             <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle} note>{product["seller"] + " - " + product["seller_contact"]}</Text>
@@ -102,6 +107,15 @@ export default class ProductsList extends React.Component {
     }
 }
 
+const styles = StyleSheet.create({
+    roundedProfileImage: {
+        width:65, height:65,
+        borderWidth:2,
+        borderColor: '#ebebeb',
+        borderRadius:50
+    }
+});
+
 const DayStyle = StyleSheet.create({
     content: {
         // flex: 1,
@@ -119,13 +133,12 @@ const DayStyle = StyleSheet.create({
     price:{
         fontSize: 25
     }
-})
+});
 
 const NightStyle = StyleSheet.create({
     content: {
         // flex: 1,
-        backgroundColor: '#303033',
-        color: "#94e1b1"
+        backgroundColor: '#303033'
     },
     buttons:
     {
@@ -147,7 +160,6 @@ const NightStyle = StyleSheet.create({
 })
 const DayStyleHeader = StyleSheet.create({
     headerStyle: {
-        color: "white"
     },
     textStyle: {
         color: "white"
@@ -156,7 +168,6 @@ const DayStyleHeader = StyleSheet.create({
 
 const NightStyleHeader = StyleSheet.create({
     headerStyle: {
-        color: "white",
         backgroundColor: "#222326"
     },
     textStyle: {

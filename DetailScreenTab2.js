@@ -1,12 +1,10 @@
 import React from 'react';
 import {StyleSheet, View, Alert, Image, Text, Dimensions, AsyncStorage} from 'react-native';
-import { Container, Content, Button, Header, Title, Left, Right, Icon, Body, Footer, FooterTab, Tab, Tabs } from 'native-base';
+import { Container, Content, Button, Header, Title, Left, Right, Icon, Body, Footer, FooterTab } from 'native-base';
 import { Video } from 'expo';
 import VideoPlayer from '@expo/videoplayer';
-import DetailScreenTab1 from './DetailScreenTab1';
-import DetailScreenTab2 from './DetailScreenTab2';
 
-export default class DetailScreen extends React.Component {
+export default class DetailScreenTab2 extends React.Component {
 
     constructor() {
         super();
@@ -38,38 +36,25 @@ export default class DetailScreen extends React.Component {
     }
 
     render() {
-        const { navigation } = this.props;
-        const product = navigation.getParam('product', null);
+        const product = this.props.product;
+        const dimensions = Dimensions.get('window');
+        const imageWidth = dimensions.width;
 
         return (
             <Container contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
-                <Header hasTabs style={this.state.nightModeChecked ? NightStyleHeader.headerStyle : DayStyleHeader.headerStyle}>
-                    <Left>
-                        <Button transparent onPress={this.goToList.bind(this)}>
-                            <Icon name='arrow-back' />
-                        </Button>
-                    </Left>
-                    <Body>
-                    <Title style={this.state.nightModeChecked ? NightStyleHeader.textStyle : DayStyleHeader.textStyle}>Product details</Title>
-                    </Body>
-                    <Right>
-                    </Right>
-                </Header>
-                <Tabs initialPage={0}>
-                    <Tab heading="Details" tabStyle={this.state.nightModeChecked ? NightStyleHeader.tabStyle : DayStyleHeader.tabStyle} activeTabStyle={this.state.nightModeChecked ? NightStyleHeader.activeTabStyle : DayStyleHeader.activeTabStyle}>
-                        <DetailScreenTab1 product={product}/>
-                    </Tab>
-                    <Tab heading="Review" tabStyle={this.state.nightModeChecked ? NightStyleHeader.tabStyle : DayStyleHeader.tabStyle} activeTabStyle={this.state.nightModeChecked ? NightStyleHeader.activeTabStyle : DayStyleHeader.activeTabStyle}>
-                        <DetailScreenTab2 product={product}/>
-                    </Tab>
-                </Tabs>
-                <Footer>
-                    <FooterTab>
-                        <Button full onPress={this.goToList.bind(this)} title="Go back" style={this.state.nightModeChecked ? NightStyle.buttons : DayStyle.buttons}>
-                            <Text style={style.buttonText}>Go back</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
+                <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
+                    <VideoPlayer style={{flex: 1}}
+                        videoProps={{
+                            shouldPlay: false,
+                            resizeMode: Video.RESIZE_MODE_CONTAIN,
+                            source: {
+                                uri: 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8',
+                            },
+                        }}
+                        isPortrait={true}
+                        playFromPositionMillis={0}
+                    />
+                </Content>
             </Container>
         );
     }
@@ -77,13 +62,14 @@ export default class DetailScreen extends React.Component {
 
 const style = StyleSheet.create({
     content: {
+        flex:1,
         padding: 10
     },
     text: {
         fontSize: 20
     },
     label: {
-      fontWeight: "bold"
+        fontWeight: "bold"
     },
     title: {
         fontSize: 35,
@@ -100,7 +86,7 @@ const style = StyleSheet.create({
 
 const DayStyle = StyleSheet.create({
     content: {
-        // flex: 1,
+        flex: 1,
         padding: 10
     },
     buttons:
@@ -122,7 +108,7 @@ const DayStyle = StyleSheet.create({
 
 const NightStyle = StyleSheet.create({
     content: {
-        // flex: 1,
+        flex: 1,
         padding: 10,
         backgroundColor: '#303033',
         color: "#94e1b1"
@@ -151,11 +137,6 @@ const DayStyleHeader = StyleSheet.create({
     headerStyle: {
         color: "white"
     },
-    tabStyle: {
-        color: "white"
-    },
-    activeTabStyle: {
-    },
     textStyle: {
         color: "white"
     }
@@ -165,14 +146,6 @@ const NightStyleHeader = StyleSheet.create({
     headerStyle: {
         color: "white",
         backgroundColor: "#222326"
-    },
-    tabStyle: {
-        color: "white",
-        backgroundColor: "#222326"
-    },
-    activeTabStyle: {
-        color: "white",
-        backgroundColor: "#404040"
     },
     textStyle: {
         color: "white"

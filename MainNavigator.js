@@ -6,6 +6,7 @@ import SignoutScreen from './SignoutScreen';
 import { DrawerNavigator, createDrawerNavigator } from 'react-navigation';
 
 import SideMenu from './SideMenu';
+import {AsyncStorage} from "react-native";
 
 export default createDrawerNavigator({
     Products: { screen: ProductsList },
@@ -18,5 +19,8 @@ export default createDrawerNavigator({
     drawerOpenRoute: 'DrawerOpen',
     drawerCloseRoute: 'DrawerClose',
     drawerToggleRoute: 'DrawerToggle',
-    contentComponent: props => <SideMenu {...props} />
+    contentComponent: props => <SideMenu darkmode={ async () => {
+        const status = await AsyncStorage.getItem("nightModeChecked");
+        return status;
+    }} {...props} />
 });

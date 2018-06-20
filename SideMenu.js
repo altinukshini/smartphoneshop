@@ -9,14 +9,29 @@ export default class SideMenu extends Component {
     constructor() {
         super();
         this.state = {
-            nightModeChecked: false,
-            animationChecked: false
+            nightModeChecked: false
         };
+    }
+
+    componentDidMount() {
+        AsyncStorage.getItem("nightModeChecked", function (err, result) {
+            if (result == 'true') {
+                this.setState({
+                    nightModeChecked: true
+                });
+
+            }
+            if (result == 'false') {
+                this.setState({
+                    nightModeChecked: false
+                });
+
+            }
+        }.bind(this));
     }
 
     componentWillMount() {
         AsyncStorage.getItem("nightModeChecked", function (err, result) {
-            console.log(result);
             if (result == 'true') {
                 this.setState({
                     nightModeChecked: true
@@ -34,25 +49,28 @@ export default class SideMenu extends Component {
 
 
     render () {
+        // const {darkmodestatus} = this.props.darkmode();
+        const darkmodestatus = this.state.nightModeChecked;
+
         return (
-            <Container contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
-                <Header style={this.state.nightModeChecked ? NightStyleHeader.headerStyle : DayStyleHeader.headerStyle}>
+            <Container contentContainerStyle={darkmodestatus ? NightStyle.content : DayStyle.content}>
+                <Header style={darkmodestatus ? NightStyleHeader.headerStyle : DayStyleHeader.headerStyle}>
                     <Body style={styles.menuHeaderBody}>
                         <Image style={styles.menuLogo} source={require('./assets/ssh.png')} />
                     </Body>
                 </Header>
-                <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
+                <Content contentContainerStyle={darkmodestatus ? NightStyle.content : DayStyle.content}>
                     {/*<DrawerItems {...this.props}/>*/}
-                    <Button style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('Products')}>
-                        <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Products</Text>
+                    <Button style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('Products')}>
+                        <Text style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton}>Products</Text>
                     </Button>
-                    <Button style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('Settings')}>
-                        <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Settings</Text>
+                    <Button style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('Settings')}>
+                        <Text style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton}>Settings</Text>
                     </Button>
                 </Content>
                 <Footer>
                     <Button full transparent light onPress={() => this.props.navigation.navigate('Signout')}>
-                        <Text style={this.state.nightModeChecked ? NightStyle.footerButton : DayStyle.footerButton}>Signout</Text>
+                        <Text style={darkmodestatus ? NightStyle.footerButton : DayStyle.footerButton}>Signout</Text>
                     </Button>
                 </Footer>
             </Container>
@@ -66,8 +84,8 @@ SideMenu.propTypes = {
 
 let styles = StyleSheet.create({
     menuLogo: {
-        height: 100,
-        width: 100,
+        height: 150,
+        width: 150,
         borderRadius: 75,
         justifyContent: 'center',
         alignItems: 'center'
