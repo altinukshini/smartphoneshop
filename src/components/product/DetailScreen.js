@@ -1,15 +1,16 @@
 import React from 'react';
 import {StyleSheet, Text, AsyncStorage} from 'react-native';
-import { Container, Button, Header, Title, Left, Right, Icon, Body, Footer, FooterTab, Tab, Tabs } from 'native-base';
+import { Container, Button, Header, Title, Left, Right, Icon, Body, Tab, Tabs } from 'native-base';
 import DetailScreenTab1 from './DetailScreenTab1';
 import DetailScreenTab2 from './DetailScreenTab2';
 import DetailScreenTab3 from './DetailScreenTab3';
 
 export default class DetailScreen extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
+            goTo: this.props.navigation.getParam('goTo', 'Products'),
             nightModeChecked: false
         };
     }
@@ -33,7 +34,7 @@ export default class DetailScreen extends React.Component {
     }
 
     goToList() {
-        this.props.navigation.navigate("Products");
+        this.props.navigation.navigate(this.state.goTo);
     }
 
     render() {
@@ -65,13 +66,6 @@ export default class DetailScreen extends React.Component {
                         <DetailScreenTab3 product={product}/>
                     </Tab>
                 </Tabs>
-                <Footer>
-                    <FooterTab>
-                        <Button full onPress={this.goToList.bind(this)} title="Go back" style={this.state.nightModeChecked ? NightStyle.buttons : DayStyle.buttons}>
-                            <Text style={style.buttonText}>Go back</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
             </Container>
         );
     }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, Dimensions } from "react-native";
 import { createDrawerNavigator } from 'react-navigation';
 import ProductsList from "./src/components/app/ProductsList";
 import SettingsScreen from "./src/components/app/SettingsScreen";
@@ -8,6 +8,8 @@ import SideMenu from './src/components/app/SideMenu';
 import MyProducts from './src/components/user/MyProducts';
 import CreateItemScreen from './src/components/user/CreateItemScreen';
 import DetailScreen from "./src/components/product/DetailScreen";
+
+const { width, height } = Dimensions.get('screen');
 
 export default createDrawerNavigator({
     Products: { screen: ProductsList },
@@ -18,6 +20,7 @@ export default createDrawerNavigator({
     CreateItemScreen: {screen: CreateItemScreen}
 }, {
     headerMode: 'none',
+    drawerWidth: Math.min(height, width) * 0.7,
     initialRouteName: 'Products',
     drawerOpenRoute: 'DrawerOpen',
     drawerCloseRoute: 'DrawerClose',

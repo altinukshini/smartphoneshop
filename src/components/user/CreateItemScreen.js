@@ -96,10 +96,10 @@ export default class CreateItemScreen extends React.Component {
 
                         <Form style={style.form}>
 
-                            <Button block light primary bordered  style={{marginTop:5, marginBottom:5}} onPress={() => this._pickImage()}><Text>Pick an image from camera roll</Text></Button>
+                            <Button full primary style={{marginTop:5, marginBottom:5}} onPress={() => this._pickImage()}><Text>Pick an image from camera roll</Text></Button>
                             <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Image: {this.state.pickImageName}</Text>
                             <Text></Text>
-                            <Button block light success bordered  style={{marginTop:5, marginBottom:5}} onPress={() => this._takePhoto()} ><Text>Take a picture</Text></Button>
+                            <Button full success style={{marginTop:5, marginBottom:5}} onPress={() => this._takePhoto()} ><Text>Take a picture</Text></Button>
                             <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Image: {this.state.pickImageName}</Text>
 
                             <Item floatingLabel>
@@ -200,7 +200,7 @@ export default class CreateItemScreen extends React.Component {
                     </KeyboardAvoidingView>
                 </Content>
                 <Footer>
-                    <Button full transparent style={style.button} success onPress={() => this.onSubmit()}><Text style={style.text}> Create </Text></Button>
+                    <Button full transparent style={style.button} success onPress={() => this.onSubmit()}><Text style={style.text}>Add product</Text></Button>
                 </Footer>
             </Container>
         );

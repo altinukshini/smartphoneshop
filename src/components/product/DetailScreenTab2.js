@@ -50,7 +50,7 @@ export default class DetailScreenTab2 extends React.Component {
                 scalesPageToFit
                 mediaPlaybackRequiresUserAction={true}
                 javaScriptEnabled={true}
-                source={{uri: 'https://www.youtube.com/embed/'+this.state.youtube+'?rel=0&autoplay=0&showinfo=0&controls=0'}}
+                source={{uri: 'https://www.youtube.com/embed/'+this.state.youtube+'?autoplay=0&rel=0&amp;controls=0&amp;showinfo=0'}}
             />
         );
     }

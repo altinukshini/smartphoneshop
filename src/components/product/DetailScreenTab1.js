@@ -31,10 +31,6 @@ export default class DetailScreenTab1 extends React.Component {
 
     }
 
-    goToList() {
-        this.props.navigation.navigate("Products");
-    }
-
     render() {
 
         const product = this.props.product;

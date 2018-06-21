@@ -86,7 +86,7 @@ export default class ProductsList extends React.Component {
                     </CardItem>
                     <CardItem style={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                         <Body>
-                        <Button style={this.state.nightModeChecked ? NightStyle.buttons : DayStyle.buttons} onPress={() => this.props.navigation.navigate("Detail", {product: product})} title="View item">
+                        <Button style={this.state.nightModeChecked ? NightStyle.buttons : DayStyle.buttons} onPress={() => this.props.navigation.navigate("Detail", {product: product, goTo: 'Products'})} title="View item">
                             <Text>View item</Text>
                         </Button>
                         </Body>
