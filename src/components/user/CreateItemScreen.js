@@ -265,14 +265,14 @@ export default class CreateItemScreen extends React.Component {
             const discount = this.state.discount;
 
             const vendor = this.state.vendor;
-            const SKU = this.state.SKU;
+            const sku = this.state.SKU;
             const latlong = this.state.latlon;
 
             const review_video = this.convertYoutubeLink(this.state.review_video);
             const description = this.state.description;
 
 
-            var product = { image, seller, seller_contact, name, price, discount, vendor, SKU, review_video, description, latlong }
+            var product = { image, seller, seller_contact, name, price, discount, vendor, sku, review_video, description, latlong }
 
             cardRef.push(product, (err) => {
                 if (err) {

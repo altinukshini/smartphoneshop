@@ -1,6 +1,6 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet } from 'react-native';
-import { Container, Header, Content, Thumbnail, List, ListItem, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
+import { AsyncStorage, StyleSheet, Alert } from 'react-native';
+import { Container, Header, Content, Thumbnail, List, ListItem, Text, Button, Icon, Left, Body, Right, Title,  } from 'native-base';
 
 import firebase from '../../../Config';
 
@@ -19,12 +19,13 @@ export default class MyProducts extends React.Component {
     }
 
     deleteProduct = (key) => {
-        console.log(key);
-
         var itemsRef = firebase.database().ref('products/' + key);
-        itemsRef.remove().then(function () {
-            console.log('removed');
-        })
+        Alert.alert('Delete', 'Do you want to delete product?',
+            [
+                {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+                {text: 'Delete', onPress: () => itemsRef.remove()},
+            ]
+        );
     }
 
     componentDidMount() {
@@ -46,8 +47,6 @@ export default class MyProducts extends React.Component {
             });
 
         });
-
-        this.state.items.map((item, index) => { console.log(item) })
     }
 
     componentWillMount() {
@@ -108,7 +107,7 @@ export default class MyProducts extends React.Component {
                     <Right />
                 </Header>
                 <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
-                    {this.productList()}
+                    { this.state.items != null ? this.productList() : <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>You don't have any products</Text>}
                 </Content>
             </Container>
         );
