@@ -18,15 +18,15 @@ export default class CreateItemScreen extends React.Component {
             uploading: false,
             imageURL: null,
             pickerResult: null,
-            pickImageName: "No image picked",
-            seller: '',
-            title:'',
+            pickImageName: null,
+            seller: null,
+            title: null,
             price: null,
             discount: null,
-            vendor: '',
-            SKU:'',
-            review_video:'',
-            description: '',
+            vendor: null,
+            SKU: null,
+            review_video: null,
+            description: null,
             latlon: '42.667542,21.166191'
         };
     }
@@ -65,6 +65,14 @@ export default class CreateItemScreen extends React.Component {
     }
 
     onSubmit () {
+        if (!this.state.pickImageName) {
+            Alert.alert("No image selected!", "Please pick an image from gallery or take a picture in order to create a product!");
+            return;
+        }
+        if (!(this.state.seller && this.state.title && this.state.price && this.state.discount && this.state.vendor && this.state.SKU && this.state.review_video && this.state.description)) {
+            Alert.alert("Form not complete!", "Please fill all fields in order to create a product!");
+            return;
+        }
         this._uploadImage();
     }
 
@@ -90,20 +98,18 @@ export default class CreateItemScreen extends React.Component {
                         {image ? null : (
                             <Text
                                 style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>
-                                Upload product image
+                                Select an image for your product:
                             </Text>
                         )}
 
                         <Form style={style.form}>
-
                             <Button full primary style={{marginTop:5, marginBottom:5}} onPress={() => this._pickImage()}><Text>Pick an image from camera roll</Text></Button>
-                            <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Image: {this.state.pickImageName}</Text>
                             <Text></Text>
                             <Button full success style={{marginTop:5, marginBottom:5}} onPress={() => this._takePhoto()} ><Text>Take a picture</Text></Button>
-                            <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Image: {this.state.pickImageName}</Text>
+                            <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Image: {this.state.pickImageName ? this.state.pickImageName : "No image selected!"}</Text>
 
                             <Item floatingLabel>
-                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Seller</Label>
+                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Seller name</Label>
                                 <Input
                                     style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={2} style={style.inputText}
@@ -113,7 +119,7 @@ export default class CreateItemScreen extends React.Component {
                             </Item>
 
                             <Item floatingLabel>
-                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Product Name</Label>
+                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Product title</Label>
                                 <Input
                                     style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={3}  style={style.inputText}
@@ -186,7 +192,7 @@ export default class CreateItemScreen extends React.Component {
                                 />
                             </Item>
                             <Item floatingLabel>
-                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Description</Label>
+                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Product description</Label>
                                 <Input
                                     multiline={true}
                                     rowSpan={5}
@@ -214,7 +220,6 @@ export default class CreateItemScreen extends React.Component {
         }
     };
 
-
     _uploadImage() {
         this._maybeRenderUploadingOverlay();
         this._handleImagePicked(this.state.pickerResult);
@@ -231,7 +236,6 @@ export default class CreateItemScreen extends React.Component {
             pickImageName: pickerResult["uri"].substr(pickerResult["uri"].lastIndexOf('/') + 1)
         });
 
-        // this._handleImagePicked(pickerResult);
     };
 
     async _pickImage() {
@@ -245,7 +249,6 @@ export default class CreateItemScreen extends React.Component {
             pickImageName: pickerResult["uri"].substr(pickerResult["uri"].lastIndexOf('/') + 1)
         });
 
-        // this._handleImagePicked(pickerResult);
     };
 
     _handleImagePicked = async pickerResult => {
@@ -253,7 +256,7 @@ export default class CreateItemScreen extends React.Component {
             this.setState({ uploading: true });
 
             let uploadUrl = await uploadImageAsync(pickerResult.uri);
-            console.log(uploadUrl);
+
             this.setState({
                 image: uploadUrl
             });
@@ -285,9 +288,7 @@ export default class CreateItemScreen extends React.Component {
                     console.log('successfully');
                     this.props.navigation.navigate("MyProducts");
                 }
-            })
-
-            Alert.alert('Product created!');
+            });
 
         } catch (e) {
             console.log(e);

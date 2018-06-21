@@ -18,17 +18,17 @@ export default class MyProducts extends React.Component {
         };
     }
 
-    deleteProduct = (key, image) => {
+    deleteProduct = (key, image, productName) => {
         var storageRef = firebase.storage().ref(image);
         var itemsRef = firebase.database().ref('products/' + key);
 
-        Alert.alert('Delete', 'Do you want to delete product?',
+        Alert.alert('Delete', 'Do you want to delete "' + productName + '" ?',
             [
                 {text: 'Cancel', onPress: () => {}, style: 'cancel'},
                 {text: 'Delete', onPress: () => storageRef.delete().then(function() {
                         itemsRef.remove()
                     }).catch(function(error) {
-                        Alert.alert('Item could not be deleted!' + error);
+                        Alert.alert('Product could not be deleted!' + error);
                     })}
             ]
         );
@@ -86,7 +86,7 @@ export default class MyProducts extends React.Component {
                                 <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle} note>{product["price"]} EUR</Text>
                             </Body>
                             <Right>
-                                <Button transparent danger onPress={() => { this.deleteProduct(this.state.itemKeys[index], product["image"]) }}><Icon name="trash" /></Button>
+                                <Button transparent danger onPress={() => { this.deleteProduct(this.state.itemKeys[index], product["image"], product["name"]) }}><Icon name="trash" /></Button>
                             </Right>
                         </ListItem>
                     </List>
