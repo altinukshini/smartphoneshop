@@ -58,16 +58,16 @@ export default class SideMenu extends Component {
                     </Body>
                 </Header>
                 <Content contentContainerStyle={darkmodestatus ? NightStyle.content : DayStyle.content}>
-                    <Button style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('Products')}>
+                    <Button dark full transparent light style={{justifyContent: "flex-start"}} onPress={() => this.props.navigation.navigate('Products')}>
                         <Text style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton}>Products</Text>
                     </Button>
-                    <Button style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('MyProducts')}>
+                    <Button dark full transparent light style={{justifyContent: "flex-start"}} onPress={() => this.props.navigation.navigate('MyProducts')}>
                         <Text style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton}>My products</Text>
                     </Button>
-                    <Button style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton} transparent full light onPress={() => this.props.navigation.navigate('CreateItemScreen')}>
+                    <Button dark transparent full light style={{justifyContent: "flex-start"}} onPress={() => this.props.navigation.navigate('CreateItemScreen')}>
                         <Text style={this.state.nightModeChecked ? NightStyle.drawerButton : DayStyle.drawerButton}>Add product</Text>
                     </Button>
-                    <Button style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton} full transparent light onPress={() => this.props.navigation.navigate('Settings')}>
+                    <Button dark sfull transparent light style={{justifyContent: "flex-start"}} onPress={() => this.props.navigation.navigate('Settings')}>
                         <Text style={darkmodestatus ? NightStyle.drawerButton : DayStyle.drawerButton}>Settings</Text>
                     </Button>
 
@@ -111,12 +111,11 @@ const DayStyle = StyleSheet.create({
         flex: 1,
     },
     drawerButton: {
-        color: "black",
+        color: 'black',
         justifyContent: "flex-start"
     },
     buttons:
     {
-        color: '#94e1b1'
     },
     textStyle:
     {
@@ -136,8 +135,7 @@ const NightStyle = StyleSheet.create({
     },
     content: {
         flex: 1,
-        backgroundColor: '#303033',
-        color: "#94e1b1"
+        backgroundColor: '#303033'
     },
     drawerButton: {
         color: "white",
@@ -145,7 +143,6 @@ const NightStyle = StyleSheet.create({
     },
     buttons:
     {
-        color: '#94e1b1'
     },
     textStyle:
     {

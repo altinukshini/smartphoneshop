@@ -4,6 +4,7 @@ import { Container, Header, Content, Thumbnail, List, ListItem, Text, Button, Ic
 
 import firebase from '../../../Config';
 
+
 export default class MyProducts extends React.Component {
 
     constructor() {
@@ -71,7 +72,7 @@ export default class MyProducts extends React.Component {
         return this.state.items.map((product, index) => {
             return (
                 this.state.user == product['seller_contact'] ?
-                    <List style={this.state.nightModeChecked ? NightStyle.listStyle : DayStyle.listStyle}>
+                    <List key={index} style={this.state.nightModeChecked ? NightStyle.listStyle : DayStyle.listStyle}>
                         <ListItem style={this.state.nightModeChecked ? NightStyle.listStyle : DayStyle.listStyle}>
                             <Button transparent size={80} onPress={() => this.props.navigation.navigate("Detail", { product: product })}>
                                 <Thumbnail square size={80}
@@ -135,7 +136,6 @@ const DayStyle = StyleSheet.create({
     },
     buttons:
         {
-            color: '#94e1b1'
         },
     textStyle:
         {
@@ -161,7 +161,6 @@ const NightStyle = StyleSheet.create({
     },
     buttons:
         {
-            color: '#94e1b1'
         },
     textStyle:
         {

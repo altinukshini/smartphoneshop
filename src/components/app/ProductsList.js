@@ -8,6 +8,7 @@ export default class ProductsList extends React.Component {
 
     constructor() {
         super();
+
         this.state = {
             items: [],
             nightModeChecked: false
@@ -66,7 +67,7 @@ export default class ProductsList extends React.Component {
             let gravatar = product["seller_contact"];
 
             return(
-                <Card style={this.state.nightModeChecked ? NightStyle.cardStyle : DayStyle.cardStyle}>
+                <Card key={index} style={this.state.nightModeChecked ? NightStyle.cardStyle : DayStyle.cardStyle}>
                     <CardItem style={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                         <Left>
                             <Gravatar options={{
@@ -140,7 +141,6 @@ const DayStyle = StyleSheet.create({
     },
     buttons:
     {
-        color: '#94e1b1'
     },
     textStyle:
     {
@@ -160,7 +160,6 @@ const NightStyle = StyleSheet.create({
     },
     buttons:
     {
-        color: '#94e1b1'
     },
     textStyle:
     {

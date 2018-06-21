@@ -95,7 +95,6 @@ const style = StyleSheet.create({
         color: "#fff"
     },
     button: {
-        color: "white",
         alignSelf: "center"
     }
 });
@@ -107,13 +106,11 @@ const DayStyle = StyleSheet.create({
     },
     buttons:
         {
-            color: '#94e1b1',
             alignSelf: "center"
         },
     textStyle:
         {
-            fontSize: 20,
-            color: 'black'
+            fontSize: 20
         },
     cardStyle: {
     },
@@ -126,18 +123,15 @@ const NightStyle = StyleSheet.create({
     content: {
         // flex: 1,
         padding: 10,
-        backgroundColor: '#303033',
-        color: "#94e1b1"
+        backgroundColor: '#303033'
     },
     buttons:
         {
-            color: '#94e1b1',
             alignSelf: "center"
         },
     textStyle:
         {
-            fontSize: 20,
-            color: 'white'
+            fontSize: 20
         },
     cardStyle: {
         backgroundColor: '#303033',
@@ -151,10 +145,8 @@ const NightStyle = StyleSheet.create({
 });
 const DayStyleHeader = StyleSheet.create({
     headerStyle: {
-        color: "white"
     },
     tabStyle: {
-        color: "white"
     },
     activeTabStyle: {
     },
@@ -165,15 +157,12 @@ const DayStyleHeader = StyleSheet.create({
 
 const NightStyleHeader = StyleSheet.create({
     headerStyle: {
-        color: "white",
         backgroundColor: "#222326"
     },
     tabStyle: {
-        color: "white",
         backgroundColor: "#222326"
     },
     activeTabStyle: {
-        color: "white",
         backgroundColor: "#404040"
     },
     textStyle: {

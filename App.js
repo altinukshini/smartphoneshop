@@ -49,8 +49,15 @@ const AppNavigator = createSwitchNavigator({
 });
 
 import { YellowBox } from 'react-native';
-YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
-console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
+YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader', 'Setting a timer']);
+console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed', 'Setting a timer'];
 console.disableYellowBox = true;
+
+const _console = _.clone(console);
+console.warn = message => {
+    if (message.indexOf('Setting a timer') <= -1) {
+        _console.warn(message);
+    }
+};
 
 export default App;

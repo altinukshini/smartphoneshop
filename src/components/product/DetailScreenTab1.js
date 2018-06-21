@@ -123,7 +123,6 @@ const DayStyle = StyleSheet.create({
     },
     buttons:
         {
-            color: '#94e1b1',
             alignSelf: "center"
         },
     price:
@@ -167,7 +166,6 @@ const NightStyle = StyleSheet.create({
     },
     buttons:
         {
-            color: '#94e1b1',
             alignSelf: "center"
         },
     textStyle:

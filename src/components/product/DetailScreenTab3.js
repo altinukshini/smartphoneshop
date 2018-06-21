@@ -83,7 +83,6 @@ const DayStyle = StyleSheet.create({
     },
     buttons:
         {
-            color: '#94e1b1',
             alignSelf: "center"
         },
     textStyle:
@@ -102,12 +101,10 @@ const NightStyle = StyleSheet.create({
     content: {
         flex: 1,
         padding: 10,
-        backgroundColor: '#303033',
-        color: "#94e1b1"
+        backgroundColor: '#303033'
     },
     buttons:
         {
-            color: '#94e1b1',
             alignSelf: "center"
         },
     textStyle:

@@ -77,7 +77,6 @@ const DayStyle = StyleSheet.create({
     },
     buttons:
         {
-            color: '#94e1b1'
         },
     textStyle:
         {
@@ -92,7 +91,6 @@ const NightStyle = StyleSheet.create({
     },
     buttons:
         {
-            color: '#94e1b1'
         },
     textStyle:
         {
