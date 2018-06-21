@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Alert, Image } from 'react-native';
-import { Container, Header, Content, Form, Item, Input, Label, Button, Text, Body, Title, Right } from 'native-base';
+import { Container, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
 import firebase from '../../../Config';
 
 export default class LoginScreen extends React.Component {
@@ -43,30 +43,30 @@ export default class LoginScreen extends React.Component {
     render() {
         return (
             <Container>
-                    <Content contentContainerStyle={style.content}>
-                        <Form style={style.form}>
-                            <Image style={{height: 100,
-                                width: 100,
-                                borderRadius: 75,
-                                justifyContent: 'center',
-                                alignItems: 'center'}} source={require('../../../assets/ssh.png')} />
-                            <Item floatingLabel >
-                                <Label>Email</Label>
-                                <Input autoCapitalize="none" autoCorrect={false} style={style.textInput} onChangeText={this.onEmailInputChanged.bind(this)}/>
-                            </Item>
-                            <Item floatingLabel >
-                                <Label>Password</Label>
-                                <Input autoCapitalize="none" style={style.textInput} secureTextEntry onChangeText={this.onPasswordInputChanged.bind(this)}/>
-                            </Item>
-                            <Button block primary onPress={this.onSubmitBtnPressed.bind(this)} style={style.loginButton}>
-                                <Text>Login</Text>
-                            </Button>
-                            <Button block primary onPress={this.onSignUpBtnPressed.bind(this)} style={style.signUpButton}>
-                                <Text>Sign up</Text>
-                            </Button>
-                        </Form>
-                    </Content>
-                </Container>
+                <Content contentContainerStyle={style.content}>
+                    <Form style={style.form}>
+                        <Image style={{height: 100,
+                            width: 100,
+                            borderRadius: 75,
+                            justifyContent: 'center',
+                            alignItems: 'center'}} source={require('../../../assets/ssh.png')} />
+                        <Item floatingLabel >
+                            <Label>Email</Label>
+                            <Input autoCapitalize="none" autoCorrect={false} style={style.textInput} onChangeText={this.onEmailInputChanged.bind(this)}/>
+                        </Item>
+                        <Item floatingLabel >
+                            <Label>Password</Label>
+                            <Input autoCapitalize="none" style={style.textInput} secureTextEntry onChangeText={this.onPasswordInputChanged.bind(this)}/>
+                        </Item>
+                        <Button block primary onPress={this.onSubmitBtnPressed.bind(this)} style={style.loginButton}>
+                            <Text>Login</Text>
+                        </Button>
+                        <Button block primary onPress={this.onSignUpBtnPressed.bind(this)} style={style.signUpButton}>
+                            <Text>Sign up</Text>
+                        </Button>
+                    </Form>
+                </Content>
+            </Container>
         )
     }
 }
