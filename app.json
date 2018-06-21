@@ -25,7 +25,12 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.altinukshini.altinukshini"
+      "package": "com.altinukshini.altinukshini",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyB9hpwTW19IK8Gjz9RAZVoTzAx09xOyQMs"
+        }
+      }
     }
   }
 }
