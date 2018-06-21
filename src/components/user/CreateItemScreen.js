@@ -86,17 +86,20 @@ export default class CreateItemScreen extends React.Component {
                 </Header>
                 <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                     <KeyboardAvoidingView behavior={'padding'} style={{flex:1}}>
+
                         {image ? null : (
                             <Text
                                 style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>
                                 Upload product image
                             </Text>
                         )}
-                        <Form style={style.form}>
-                            <Button full light primary bordered  style={{marginTop:5, marginBottom:5}} onPress={() => this._pickImage()}><Text>Pick an image from camera roll</Text></Button>
-                            <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Image: {this.state.pickImageName}</Text>
 
-                            <Button full light success bordered  style={{marginTop:5, marginBottom:5}} onPress={() => this._takePhoto()} ><Text>Take a photo</Text></Button>
+                        <Form style={style.form}>
+
+                            <Button block light primary bordered  style={{marginTop:5, marginBottom:5}} onPress={() => this._pickImage()}><Text>Pick an image from camera roll</Text></Button>
+                            <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Image: {this.state.pickImageName}</Text>
+                            <Text></Text>
+                            <Button block light success bordered  style={{marginTop:5, marginBottom:5}} onPress={() => this._takePhoto()} ><Text>Take a picture</Text></Button>
                             <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Image: {this.state.pickImageName}</Text>
 
                             <Item floatingLabel>
@@ -174,7 +177,7 @@ export default class CreateItemScreen extends React.Component {
                             </Item>
 
                             <Item floatingLabel>
-                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Review Video</Label>
+                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Review (paste YouTube link)</Label>
                                 <Input
                                     style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={8} style={style.inputText}
@@ -186,6 +189,7 @@ export default class CreateItemScreen extends React.Component {
                                 <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Description</Label>
                                 <Input
                                     multiline={true}
+                                    rowSpan={5}
                                     style={this.state.nightModeChecked ? NightStyle.textArea : DayStyle.textArea}
                                     key={9} style={style.inputText}
                                     onChangeText={(description) => this.setState({ description })}
@@ -348,7 +352,7 @@ const DayStyle = StyleSheet.create({
         },
     labelStyle:
         {
-            color: 'black'
+            color: '#888'
         },
     pickerStyle:
         {
