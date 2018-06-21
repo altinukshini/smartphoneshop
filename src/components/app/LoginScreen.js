@@ -44,19 +44,18 @@ export default class LoginScreen extends React.Component {
         return (
             <Container>
                 <Content contentContainerStyle={style.content}>
+                    <Image style={{height: 180,
+                        width: 180,
+                        justifyContent: 'center',
+                        alignItems: 'center'}} source={require('../../../assets/ssh.png')} />
                     <Form style={style.form}>
-                        <Image style={{height: 100,
-                            width: 100,
-                            borderRadius: 75,
-                            justifyContent: 'center',
-                            alignItems: 'center'}} source={require('../../../assets/ssh.png')} />
-                        <Item floatingLabel >
+                        <Item stackedLabel style={style.textInput} >
                             <Label>Email</Label>
-                            <Input autoCapitalize="none" autoCorrect={false} style={style.textInput} onChangeText={this.onEmailInputChanged.bind(this)}/>
+                            <Input autoCapitalize="none" autoCorrect={false} onChangeText={this.onEmailInputChanged.bind(this)}/>
                         </Item>
-                        <Item floatingLabel >
+                        <Item stackedLabel style={style.textInput} >
                             <Label>Password</Label>
-                            <Input autoCapitalize="none" style={style.textInput} secureTextEntry onChangeText={this.onPasswordInputChanged.bind(this)}/>
+                            <Input autoCapitalize="none" secureTextEntry onChangeText={this.onPasswordInputChanged.bind(this)}/>
                         </Item>
                         <Button block primary onPress={this.onSubmitBtnPressed.bind(this)} style={style.loginButton}>
                             <Text>Login</Text>
@@ -80,11 +79,15 @@ const style = StyleSheet.create({
     loginButton: {
         marginTop: 40,
         marginBottom: 20,
-        width: "70%",
+        width: "80%",
+        alignSelf: "center"
+    },
+    textInput: {
+      width: "100%",
         alignSelf: "center"
     },
     signUpButton: {
-        width: "70%",
+        width: "80%",
         alignSelf: "center"
     },
     form: {

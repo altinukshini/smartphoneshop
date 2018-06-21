@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Alert, BackHandler } from 'react-native';
+import { StyleSheet, Alert, BackHandler, Image } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text, Left, Body, Icon, Title, Right } from 'native-base';
 import firebase from '../../../Config';
 
@@ -71,8 +71,12 @@ export default class SignUpScreen extends React.Component {
                     <Right/>
                 </Header>
                 <Content contentContainerStyle={style.content}>
+                    <Image style={{height: 180,
+                        width: 180,
+                        justifyContent: 'center',
+                        alignItems: 'center'}} source={require('../../../assets/ssh.png')} />
                     <Form style={style.form}>
-                        <Item floatingLabel>
+                        <Item stackedLabel style={style.textInput}>
                             <Label>Email</Label>
                             <Input
                                 autoCapitalize="none"
@@ -82,7 +86,7 @@ export default class SignUpScreen extends React.Component {
                                     .onEmailInputChanged
                                     .bind(this)}/>
                         </Item>
-                        <Item floatingLabel>
+                        <Item stackedLabel style={style.textInput}>
                             <Label>Password</Label>
                             <Input
                                 autoCapitalize="none"
@@ -92,7 +96,7 @@ export default class SignUpScreen extends React.Component {
                                     .onPasswordInputChanged
                                     .bind(this)}/>
                         </Item>
-                        <Item floatingLabel>
+                        <Item stackedLabel style={style.textInput}>
                             <Label>Confirm password</Label>
                             <Input
                                 autoCapitalize="none"
@@ -121,13 +125,18 @@ export default class SignUpScreen extends React.Component {
 const style = StyleSheet.create({
     content: {
         flex: 1,
+        paddingTop: -20,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    textInput: {
+        width: "100%",
+        alignSelf: "center"
     },
     submitButton: {
         marginTop: 40,
         marginBottom: 20,
-        width: "70%",
+        width: "80%",
         alignSelf: "center"
     },
     form: {
