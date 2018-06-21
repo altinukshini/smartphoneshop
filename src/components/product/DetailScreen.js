@@ -1,8 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, Alert, Image, Text, Dimensions, AsyncStorage} from 'react-native';
-import { Container, Content, Button, Header, Title, Left, Right, Icon, Body, Footer, FooterTab, Tab, Tabs } from 'native-base';
-import { Video } from 'expo';
-import VideoPlayer from '@expo/videoplayer';
+import {StyleSheet, Text, AsyncStorage} from 'react-native';
+import { Container, Button, Header, Title, Left, Right, Icon, Body, Footer, FooterTab, Tab, Tabs } from 'native-base';
 import DetailScreenTab1 from './DetailScreenTab1';
 import DetailScreenTab2 from './DetailScreenTab2';
 import DetailScreenTab3 from './DetailScreenTab3';
@@ -122,7 +120,7 @@ const DayStyle = StyleSheet.create({
     price:{
         fontSize: 25
     }
-})
+});
 
 const NightStyle = StyleSheet.create({
     content: {
@@ -150,7 +148,7 @@ const NightStyle = StyleSheet.create({
         color: "white"
     }
 
-})
+});
 const DayStyleHeader = StyleSheet.create({
     headerStyle: {
         color: "white"

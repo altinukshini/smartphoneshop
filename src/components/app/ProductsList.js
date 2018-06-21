@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, Alert, Console, Image, AsyncStorage} from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
-import firebase from './Config';
-import {Gravatar, GravatarApi} from 'react-native-gravatar';
+import {StyleSheet, Alert, Console, Image, AsyncStorage} from 'react-native';
+import { Container, Header, Content, Card, CardItem, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
+import {Gravatar} from 'react-native-gravatar';
+import firebase from '../../../Config';
 
 export default class ProductsList extends React.Component {
 

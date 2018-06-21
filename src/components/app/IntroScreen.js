@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, AsyncStorage, Text, Button, View, Image, Easing ,Animated } from 'react-native';
-import firebase from './Config';
+import { View, Animated } from 'react-native';
+import firebase from '../../../Config';
 
 export default class IntroScreen extends React.Component {
 
@@ -56,7 +56,7 @@ export default class IntroScreen extends React.Component {
     render() {
         return (
             <View style={style.container}>
-                <Animated.Image source={require('./assets/ssh-white.png')}
+                <Animated.Image source={require('../../../assets/ssh-white.png')}
                     style={{
                         opacity: this.state.logoOpacity,
                         width: 250,

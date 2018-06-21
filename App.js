@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { SwitchNavigator, createSwitchNavigator } from "react-navigation";
+import { createSwitchNavigator } from "react-navigation";
 import MainNavigator from "./MainNavigator";
-import LoginScreen from "./LoginScreen";
-import SignUpScreen from "./SignUpScreen";
-import StyleWrapper from './StyleWrapper';
-import IntroScreen from "./IntroScreen";
+import LoginScreen from "./src/components/app/LoginScreen";
+import SignUpScreen from "./src/components/app/SignUpScreen";
+import StyleWrapper from './src/components/app/StyleWrapper';
+import IntroScreen from "./src/components/app/IntroScreen";
 import { Font, AppLoading } from "expo";
 import { Root } from "native-base";
 

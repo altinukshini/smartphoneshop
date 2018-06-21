@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Form, Item, Input, Label, Left, Right, Body, Button, Icon, Title, ListItem, CheckBox, Text } from 'native-base';
-// import { AsyncStorage, View, StyleSheet, Button, Text } from 'react-native';
-import firebase from "./Config";
-import {
-    AppRegistry,
-    StyleSheet,
-    Alert,
-    AsyncStorage
-} from 'react-native';
+import { Container, Header, Content, Left, Right, Body, Button, Icon, Title, ListItem, CheckBox, Text } from 'native-base';
+import { StyleSheet, AsyncStorage } from 'react-native';
 
 export default class SettingsScreen extends Component {
 

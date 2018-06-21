@@ -1,8 +1,8 @@
 import React from 'react';
-import {AsyncStorage, StyleSheet, View} from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
+import { AsyncStorage, StyleSheet } from 'react-native';
+import { Container, Header, Content, Thumbnail, List, ListItem, Text, Button, Icon, Left, Body, Right, Title } from 'native-base';
 
-import firebase from './Config';
+import firebase from '../../../Config';
 
 export default class MyProducts extends React.Component {
 
@@ -71,28 +71,22 @@ export default class MyProducts extends React.Component {
         return this.state.items.map((product, index) => {
             return (
                 this.state.user == product['seller_contact'] ?
-                    <Card key={index} style={this.state.nightModeChecked ? NightStyle.cardStyle : DayStyle.cardStyle}>
-                        <CardItem style={this.state.nightModeChecked ? NightStyle.cardItem : DayStyle.cardItem}>
-                            <Left>
-                                <Button transparent onPress={() => this.props.navigation.navigate("Detail", { product: product })}>
-                                    <Thumbnail
-                                        source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/smartphoneshop-ubt.appspot.com/o/' + product["image"] + '?alt=media' }} />
-                                </Button>
-                                <Body>
-                                <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>{product["name"]}</Text>
-                                <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle} note>{product["seller"] + " - " + product["seller_contact"]}</Text>
-                                </Body>
-                            </Left>
-                        </CardItem>
-                        <CardItem style={this.state.nightModeChecked ? NightStyle.cardItem : DayStyle.cardItem}>
+                    <List style={this.state.nightModeChecked ? NightStyle.listStyle : DayStyle.listStyle}>
+                        <ListItem style={this.state.nightModeChecked ? NightStyle.listStyle : DayStyle.listStyle}>
+                            <Button transparent size={80} onPress={() => this.props.navigation.navigate("Detail", { product: product })}>
+                                <Thumbnail square size={80}
+                                    source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/smartphoneshop-ubt.appspot.com/o/' + product["image"] + '?alt=media' }} />
+                            </Button>
                             <Body>
-                                <Button light bordered  danger onPress={() => { this.deleteProduct(this.state.itemKeys[index]) }}><Text>Delete</Text></Button>
+                                <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>{product["name"]}</Text>
+                                <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle} note>{product["price"]} EUR</Text>
                             </Body>
                             <Right>
-                                <Text style={this.state.nightModeChecked ? NightStyle.price : DayStyle.price}>{product["price"]} EUR</Text>
+                                <Button transparent danger onPress={() => { this.deleteProduct(this.state.itemKeys[index]) }}><Icon name="trash" /></Button>
                             </Right>
-                        </CardItem>
-                    </Card> : <Text></Text>
+                        </ListItem>
+                    </List>
+                : null
             )
         })
     }
@@ -112,7 +106,7 @@ export default class MyProducts extends React.Component {
                     </Body>
                     <Right />
                 </Header>
-                <Content >
+                <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                     {this.productList()}
                 </Content>
             </Container>
@@ -124,16 +118,17 @@ const styles = StyleSheet.create({
     roundedProfileImage: {
         width:65, height:65,
         borderWidth:2,
-        borderColor: '#ebebeb',
-        borderRadius:50
+        borderColor: '#ebebeb'
     }
 });
 
 const DayStyle = StyleSheet.create({
     container: {
         flex: 1,
+        padding: 10
     },
     content: {
+        paddingRight: 10,
         flex: 1
     },
     cardItem:{
@@ -146,7 +141,7 @@ const DayStyle = StyleSheet.create({
         {
             color: 'black'
         },
-    cardStyle: {
+    listStyle: {
     },
     price:{
         fontSize: 25
@@ -156,10 +151,13 @@ const DayStyle = StyleSheet.create({
 const NightStyle = StyleSheet.create({
     container: {
         flex: 1,
+        padding: 10,
+        backgroundColor: '#303033'
     },
     content: {
-        flex:1,
-        backgroundColor: '#303033'
+        backgroundColor: '#303033',
+        paddingRight: 10,
+        flex: 1
     },
     buttons:
         {
@@ -169,11 +167,7 @@ const NightStyle = StyleSheet.create({
         {
             color: 'white'
         },
-    cardItem: {
-        backgroundColor: '#303033',
-        borderColor: "#333"
-    },
-    cardStyle: {
+    listStyle: {
         backgroundColor: '#303033',
         borderColor: "#333"
     },

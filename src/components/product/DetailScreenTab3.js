@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, Alert, Image, Text, Dimensions, AsyncStorage} from 'react-native';
-import { Container, Content, Button, Header, Title, Left, Right, Icon, Body, Footer, FooterTab } from 'native-base';
+import {StyleSheet, AsyncStorage} from 'react-native';
+import { Container, Content} from 'native-base';
 import { MapView } from 'expo';
 
 
@@ -96,7 +96,7 @@ const DayStyle = StyleSheet.create({
     price:{
         fontSize: 25
     }
-})
+});
 
 const NightStyle = StyleSheet.create({
     content: {
@@ -124,22 +124,4 @@ const NightStyle = StyleSheet.create({
         color: "white"
     }
 
-})
-const DayStyleHeader = StyleSheet.create({
-    headerStyle: {
-        color: "white"
-    },
-    textStyle: {
-        color: "white"
-    }
-});
-
-const NightStyleHeader = StyleSheet.create({
-    headerStyle: {
-        color: "white",
-        backgroundColor: "#222326"
-    },
-    textStyle: {
-        color: "white"
-    }
 });

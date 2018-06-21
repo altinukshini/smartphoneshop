@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, Alert, Image } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text, Body, Title, Right } from 'native-base';
-// import firebase from 'firebase';
-import firebase from './Config';
+import firebase from '../../../Config';
 
 export default class LoginScreen extends React.Component {
 
@@ -44,19 +43,13 @@ export default class LoginScreen extends React.Component {
     render() {
         return (
             <Container>
-                    <Header>
-                        <Body>
-                            <Title>Login</Title>
-                        </Body>
-                        <Right/>
-                    </Header>
                     <Content contentContainerStyle={style.content}>
                         <Form style={style.form}>
                             <Image style={{height: 100,
                                 width: 100,
                                 borderRadius: 75,
                                 justifyContent: 'center',
-                                alignItems: 'center'}} source={require('./assets/ssh.png')} />
+                                alignItems: 'center'}} source={require('../../../assets/ssh.png')} />
                             <Item floatingLabel >
                                 <Label>Email</Label>
                                 <Input autoCapitalize="none" autoCorrect={false} style={style.textInput} onChangeText={this.onEmailInputChanged.bind(this)}/>

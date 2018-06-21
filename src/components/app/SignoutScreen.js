@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert } from 'react-native';
 import { Spinner } from 'native-base';
-import firebase from './Config'
+import firebase from '../../../Config';
 
 export default class SignoutScreen extends React.Component {
 

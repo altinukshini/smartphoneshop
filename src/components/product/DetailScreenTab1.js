@@ -145,7 +145,7 @@ const DayStyle = StyleSheet.create({
     },
     cardStyle: {
     }
-})
+});
 
 const NightStyle = StyleSheet.create({
     content: {
@@ -182,22 +182,4 @@ const NightStyle = StyleSheet.create({
         borderColor: "#333"
     }
 
-})
-const DayStyleHeader = StyleSheet.create({
-    headerStyle: {
-        color: "white"
-    },
-    textStyle: {
-        color: "white"
-    }
-});
-
-const NightStyleHeader = StyleSheet.create({
-    headerStyle: {
-        color: "white",
-        backgroundColor: "#222326"
-    },
-    textStyle: {
-        color: "white"
-    }
 });

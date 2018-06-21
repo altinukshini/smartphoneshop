@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-    ActivityIndicator,
-    Alert,
-    StatusBar,
-    StyleSheet,
-    KeyboardAvoidingView
-} from 'react-native';
-import {Container, Content, Body, Text, Button, Header, Input, Item, Label, Left, Footer, Right, Icon, Title, Spinner, Form, Picker } from 'native-base';
-import { Constants, ImagePicker, Permissions } from 'expo';
+import { Alert, StyleSheet, KeyboardAvoidingView, AsyncStorage } from 'react-native';
+import { Container, Content, Body, Text, Button, Header, Input, Item, Label, Left, Footer, Right, Icon, Title, Spinner, Form, Picker } from 'native-base';
+import { ImagePicker, Permissions } from 'expo';
 import uuid from 'uuid';
-import firebase from './Config';
+import firebase from '../../../Config';
 
 console.disableYellowBox = true;
 
@@ -19,6 +13,7 @@ export default class CreateItemScreen extends React.Component {
         super(props);
 
         this.state = {
+            nightModeChecked: false,
             image: null,
             uploading: false,
             imageURL: null,
@@ -34,6 +29,24 @@ export default class CreateItemScreen extends React.Component {
             description: '',
             latlon: '42.667542,21.166191'
         };
+    }
+
+    componentWillMount() {
+        AsyncStorage.getItem("nightModeChecked", function (err, result) {
+            if (result == 'true') {
+                this.setState({
+                    nightModeChecked: true
+                });
+
+            }
+            if (result == 'false') {
+                this.setState({
+                    nightModeChecked: false
+                });
+
+            }
+        }.bind(this));
+
     }
 
     async componentDidMount() {
@@ -52,15 +65,7 @@ export default class CreateItemScreen extends React.Component {
     }
 
     onSubmit () {
-
         this._uploadImage();
-
-       // if (this.state.image == null) {
-       //     Alert.alert("Card could not be saved");
-       //     return;
-       // }
-
-
     }
 
     render() {
@@ -75,7 +80,7 @@ export default class CreateItemScreen extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                    <Title style={this.state.nightModeChecked ? NightStyleHeader.textStyle : NightStyleHeader.textStyle}>Create product</Title>
+                    <Title style={this.state.nightModeChecked ? NightStyleHeader.textStyle : DayStyleHeader.textStyle}>Create product</Title>
                     </Body>
                     <Right/>
                 </Header>
@@ -83,25 +88,21 @@ export default class CreateItemScreen extends React.Component {
                     <KeyboardAvoidingView behavior={'padding'} style={{flex:1}}>
                         {image ? null : (
                             <Text
-                                style={{
-                                    fontSize: 15,
-                                    fontWeight: 'bold',
-                                    marginBottom: 15,
-                                    textAlign: 'left',
-                                }}>
+                                style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>
                                 Upload product image
                             </Text>
                         )}
                         <Form style={style.form}>
                             <Button full light primary bordered  style={{marginTop:5, marginBottom:5}} onPress={() => this._pickImage()}><Text>Pick an image from camera roll</Text></Button>
-                            <Text>Image: {this.state.pickImageName}</Text>
+                            <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Image: {this.state.pickImageName}</Text>
 
                             <Button full light success bordered  style={{marginTop:5, marginBottom:5}} onPress={() => this._takePhoto()} ><Text>Take a photo</Text></Button>
-                            <Text>Image: {this.state.pickImageName}</Text>
+                            <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Image: {this.state.pickImageName}</Text>
 
                             <Item floatingLabel>
-                                <Label>Seller</Label>
+                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Seller</Label>
                                 <Input
+                                    style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={2} style={style.inputText}
                                     onChangeText={(seller) => this.setState({ seller })}
                                     value={this.state.seller}
@@ -109,27 +110,33 @@ export default class CreateItemScreen extends React.Component {
                             </Item>
 
                             <Item floatingLabel>
-                                <Label>Product Name</Label>
+                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Product Name</Label>
                                 <Input
+                                    style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={3}  style={style.inputText}
                                     onChangeText={(title) => this.setState({ title })}
                                     value={this.state.title}
                                 />
                             </Item>
-                            <Picker
-                                style={{height:50, width:100 }}
-                                iosHeader="Select City:"
-                                mode="dropdown"
-                                onValueChange={(latlon) => this.onLatLonChange(latlon)}
-                                selectedValue={this.state.latlon}
-                            >
-                                <Picker.Item label="Prishtine" value="42.667542,21.166191" />
-                                <Picker.Item label="Prizren" value="42.215260,20.741474" />
-                                <Picker.Item label="Gjilan" value="42.463486,21.468315" />
-                            </Picker>
+
+                            <Item style={{marginTop:15}}>
+                                <Picker
+                                    style={this.state.nightModeChecked ? NightStyle.pickerStyle : NightStyle.pickerStyle}
+                                    iosHeader="Select City:"
+                                    mode="dropdown"
+                                    onValueChange={(latlon) => this.onLatLonChange(latlon)}
+                                    selectedValue={this.state.latlon}
+                                >
+                                    <Picker.Item label="Prishtine" value="42.667542,21.166191" style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}/>
+                                    <Picker.Item label="Prizren" value="42.215260,20.741474" style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}/>
+                                    <Picker.Item label="Gjilan" value="42.463486,21.468315" style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}/>
+                                </Picker>
+                            </Item>
+
                             <Item floatingLabel>
-                                <Label>Price</Label>
+                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Price</Label>
                                 <Input
+                                    style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={4} style={style.inputText}
                                     onChangeText={(price) => this.setState({ price:price })}
                                     value={this.state.price}
@@ -137,8 +144,9 @@ export default class CreateItemScreen extends React.Component {
                             </Item>
 
                             <Item floatingLabel>
-                                <Label>Discount</Label>
+                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Discount</Label>
                                 <Input
+                                    style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={5} style={style.inputText}
                                     onChangeText={(discount) => this.setState({ discount })}
                                     value={this.state.discount}
@@ -146,8 +154,9 @@ export default class CreateItemScreen extends React.Component {
                             </Item>
 
                             <Item floatingLabel>
-                                <Label>Vendor</Label>
+                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Vendor</Label>
                                 <Input
+                                    style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={6} style={style.inputText}
                                     onChangeText={(vendor) => this.setState({ vendor })}
                                     value={this.state.vendor}
@@ -155,8 +164,9 @@ export default class CreateItemScreen extends React.Component {
                             </Item>
 
                             <Item floatingLabel>
-                                <Label>SKU</Label>
+                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>SKU</Label>
                                 <Input
+                                    style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={7} style={style.inputText}
                                     onChangeText={(SKU) => this.setState({ SKU })}
                                     value={this.state.SKU}
@@ -164,16 +174,19 @@ export default class CreateItemScreen extends React.Component {
                             </Item>
 
                             <Item floatingLabel>
-                                <Label>Review Video</Label>
+                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Review Video</Label>
                                 <Input
+                                    style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={8} style={style.inputText}
                                     onChangeText={(review_video) => this.setState({ review_video })}
                                     value={this.state.review_video}
                                 />
                             </Item>
                             <Item floatingLabel>
-                                <Label>Description</Label>
+                                <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Description</Label>
                                 <Input
+                                    multiline={true}
+                                    style={this.state.nightModeChecked ? NightStyle.textArea : DayStyle.textArea}
                                     key={9} style={style.inputText}
                                     onChangeText={(description) => this.setState({ description })}
                                     value={this.state.description}
@@ -246,7 +259,7 @@ export default class CreateItemScreen extends React.Component {
 
             const seller = this.state.seller;
             const seller_contact = firebase.auth().currentUser.email;
-            const title = this.state.title;
+            const name = this.state.title;
 
             const price = this.state.price;
             const discount = this.state.discount;
@@ -259,7 +272,7 @@ export default class CreateItemScreen extends React.Component {
             const description = this.state.description;
 
 
-            var product = { image, seller, seller_contact, title, price, discount, vendor, SKU, review_video, description, latlong }
+            var product = { image, seller, seller_contact, name, price, discount, vendor, SKU, review_video, description, latlong }
 
             cardRef.push(product, (err) => {
                 if (err) {
@@ -270,11 +283,11 @@ export default class CreateItemScreen extends React.Component {
                 }
             })
 
-            Alert.alert('Upload success! :)');
+            Alert.alert('Product created!');
 
         } catch (e) {
             console.log(e);
-            Alert.alert('Upload failed, sorry :(');
+            Alert.alert('Product creation failed!');
         } finally {
             this.setState({ uploading: false });
         }
@@ -301,7 +314,7 @@ const style = StyleSheet.create({
     },
 
     text: {
-        color:'white',
+        color:'#fff',
     },
     button: {
         width: "70%",
@@ -328,6 +341,22 @@ const DayStyle = StyleSheet.create({
         {
             color: 'black'
         },
+    textArea:
+        {
+            color: 'black',
+            height: 200
+        },
+    labelStyle:
+        {
+            color: 'black'
+        },
+    pickerStyle:
+        {
+            height: 50,
+            marginTop: 10,
+            borderWidth: 1,
+            borderColor: "#ebebeb"
+        },
     cardStyle: {
     },
     price:{
@@ -352,10 +381,25 @@ const NightStyle = StyleSheet.create({
         {
             color: 'white'
         },
+    textArea:
+        {
+            color: 'white',
+            height: 200
+        },
     cardStyle: {
         backgroundColor: '#303033',
         borderColor: "#333"
     },
+    labelStyle:
+        {
+            color: 'white'
+        },
+    pickerStyle:
+        {
+            height: 50,
+            borderWidth: 1,
+            borderColor: "#ebebeb"
+        },
     price: {
         fontSize: 25,
         color: "white"

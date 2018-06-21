@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
-import { DrawerItems } from 'react-navigation';
-import { Container, Content, Body, Header, Button, Text, Footer } from 'native-base'
-import {Alert, AsyncStorage, Image, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { Container, Content, Body, Header, Button, Text, Footer } from 'native-base';
+import { AsyncStorage, Image, StyleSheet } from 'react-native';
 
 export default class SideMenu extends Component {
 
@@ -49,14 +48,13 @@ export default class SideMenu extends Component {
 
 
     render () {
-        // const {darkmodestatus} = this.props.darkmode();
         const darkmodestatus = this.state.nightModeChecked;
 
         return (
             <Container contentContainerStyle={darkmodestatus ? NightStyle.content : DayStyle.content}>
                 <Header style={darkmodestatus ? NightStyleHeader.headerStyle : DayStyleHeader.headerStyle}>
                     <Body style={styles.menuHeaderBody}>
-                        <Image style={styles.menuLogo} source={require('./assets/ssh.png')} />
+                        <Image style={styles.menuLogo} source={require('../../../assets/ssh.png')} />
                     </Body>
                 </Header>
                 <Content contentContainerStyle={darkmodestatus ? NightStyle.content : DayStyle.content}>
