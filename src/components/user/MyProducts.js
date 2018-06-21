@@ -1,6 +1,6 @@
 import React from 'react';
 import { AsyncStorage, StyleSheet, Alert } from 'react-native';
-import { Container, Header, Content, Thumbnail, List, ListItem, Text, Button, Icon, Left, Body, Right, Title,  } from 'native-base';
+import { Container, Header, Content, Thumbnail, List, ListItem, Footer, Text, Button, Icon, Left, Body, Right, Title,  } from 'native-base';
 
 import firebase from '../../../Config';
 
@@ -18,12 +18,18 @@ export default class MyProducts extends React.Component {
         };
     }
 
-    deleteProduct = (key) => {
+    deleteProduct = (key, image) => {
+        var storageRef = firebase.storage().ref(image);
         var itemsRef = firebase.database().ref('products/' + key);
+
         Alert.alert('Delete', 'Do you want to delete product?',
             [
                 {text: 'Cancel', onPress: () => {}, style: 'cancel'},
-                {text: 'Delete', onPress: () => itemsRef.remove()},
+                {text: 'Delete', onPress: () => storageRef.delete().then(function() {
+                        itemsRef.remove()
+                    }).catch(function(error) {
+                        Alert.alert('Item could not be deleted!' + error);
+                    })}
             ]
         );
     }
@@ -72,17 +78,15 @@ export default class MyProducts extends React.Component {
             return (
                 this.state.user == product['seller_contact'] ?
                     <List key={index} style={this.state.nightModeChecked ? NightStyle.listStyle : DayStyle.listStyle}>
-                        <ListItem style={this.state.nightModeChecked ? NightStyle.listStyle : DayStyle.listStyle}>
-                            <Button transparent size={80} onPress={() => this.props.navigation.navigate("Detail", { product: product })}>
+                        <ListItem style={this.state.nightModeChecked ? NightStyle.listStyle : DayStyle.listStyle} onPress={() => this.props.navigation.navigate("Detail", { product: product, goTo: 'MyProducts' })}>
                                 <Thumbnail square size={80}
                                     source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/smartphoneshop-ubt.appspot.com/o/' + product["image"] + '?alt=media' }} />
-                            </Button>
                             <Body>
                                 <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>{product["name"]}</Text>
                                 <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle} note>{product["price"]} EUR</Text>
                             </Body>
                             <Right>
-                                <Button transparent danger onPress={() => { this.deleteProduct(this.state.itemKeys[index]) }}><Icon name="trash" /></Button>
+                                <Button transparent danger onPress={() => { this.deleteProduct(this.state.itemKeys[index], product["image"]) }}><Icon name="trash" /></Button>
                             </Right>
                         </ListItem>
                     </List>
@@ -102,23 +106,25 @@ export default class MyProducts extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                    <Title style={this.state.nightModeChecked ? NightStyleHeader.textStyle : NightStyleHeader.textStyle}>My Products</Title>
+                    <Title style={this.state.nightModeChecked ? NightStyleHeader.textStyle : DayStyleHeader.textStyle}>My Products</Title>
                     </Body>
                     <Right />
                 </Header>
                 <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                     { this.state.items != null ? this.productList() : <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>You don't have any products</Text>}
                 </Content>
+                <Footer>
+                    <Button full transparent style={style.button} success onPress={() => this.props.navigation.navigate('CreateItemScreen')}><Text style={{color: "#fff"}}>Add new product</Text></Button>
+                </Footer>
             </Container>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    roundedProfileImage: {
-        width:65, height:65,
-        borderWidth:2,
-        borderColor: '#ebebeb'
+const style = StyleSheet.create({
+    button: {
+        width: "70%",
+        alignSelf: "center"
     }
 });
 

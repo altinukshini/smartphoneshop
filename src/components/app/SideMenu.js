@@ -54,7 +54,7 @@ export default class SideMenu extends Component {
             <Container contentContainerStyle={darkmodestatus ? NightStyle.content : DayStyle.content}>
                 <Header style={darkmodestatus ? NightStyleHeader.headerStyle : DayStyleHeader.headerStyle}>
                     <Body style={styles.menuHeaderBody}>
-                        <Image style={styles.menuLogo} source={require('../../../assets/ssh.png')} />
+                        <Image style={styles.menuLogo} source={darkmodestatus ? require('../../../assets/drawer-ssh-white.png') : require('../../../assets/drawer-ssh.png')} />
                     </Body>
                 </Header>
                 <Content contentContainerStyle={darkmodestatus ? NightStyle.content : DayStyle.content}>
