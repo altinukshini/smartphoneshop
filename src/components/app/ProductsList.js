@@ -59,7 +59,6 @@ export default class ProductsList extends React.Component {
             });
 
         });
-        Alert.alert("Products refreshed");
     }
 
     productList() {

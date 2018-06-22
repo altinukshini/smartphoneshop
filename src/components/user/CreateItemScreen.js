@@ -1,6 +1,7 @@
 import React from 'react';
 import { Alert, StyleSheet, KeyboardAvoidingView, AsyncStorage } from 'react-native';
-import { Container, Content, Body, Text, Button, Header, Input, Item, Label, Left, Footer, Right, Icon, Title, Spinner, Form, Picker } from 'native-base';
+import { Container, Content, Body, Text, Button, Header, Input, Item, Label, Left, Footer, Right, Icon, Title, Form, Picker } from 'native-base';
+import Spinner from 'react-native-loading-spinner-overlay';
 import { ImagePicker, Permissions } from 'expo';
 import uuid from 'uuid';
 import firebase from '../../../Config';
@@ -94,6 +95,8 @@ export default class CreateItemScreen extends React.Component {
                 </Header>
                 <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
                     <KeyboardAvoidingView behavior={'padding'} style={{flex:1}}>
+
+                        <Spinner visible={this.state.uploading} animation='fade' textContent={"Loading..."} textStyle={{color: '#FFF'}} />
 
                         {image ? null : (
                             <Text
@@ -212,16 +215,7 @@ export default class CreateItemScreen extends React.Component {
         );
     }
 
-    _maybeRenderUploadingOverlay() {
-        if (this.state.uploading) {
-            return (
-                <Spinner />
-            );
-        }
-    };
-
     _uploadImage() {
-        this._maybeRenderUploadingOverlay();
         this._handleImagePicked(this.state.pickerResult);
     };
 
@@ -285,7 +279,6 @@ export default class CreateItemScreen extends React.Component {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log('successfully');
                     this.props.navigation.navigate("MyProducts");
                 }
             });
