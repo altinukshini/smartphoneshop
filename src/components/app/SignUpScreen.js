@@ -12,7 +12,9 @@ export default class SignUpScreen extends React.Component {
             email: '',
             password: '',
             confirmPassword: '',
-            errorMessage: null
+            emailError: false,
+            passwordError: false,
+            confirmPasswordError: false
         };
     }
 
@@ -24,30 +26,73 @@ export default class SignUpScreen extends React.Component {
     }
 
     onEmailInputChanged(val) {
-        this.setState({ email: val });
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (reg.test(val)) {
+            // console.log("Email is Correct");
+            this.setState({ emailError: false })
+            this.setState({ email: val });
+        }
+        else {
+            this.setState({ emailError: true })
+            this.setState({ email: '' });
+            // console.log("Email is Incorrect");
+        }
+
     }
 
     onPasswordInputChanged(val) {
-        this.setState({ password: val });
+        if (val.length > 5 && 20 > val.length) {
+            // console.log('correct')
+            this.setState({ passwordError: false })
+            this.setState({
+                password: val
+            });
+        } else {
+            // console.log('password should be atleast 6 characters and max 20 characters')
+            this.setState({ passwordError: true })
+            this.setState({ password: '' })
+        }
     }
 
     onConfirmPwdInputChanged(val) {
-        this.setState({ confirmPassword: val });
+        let tempConfirmPassword = '';
+
+        if (val.length > 5 && 20 > val.length) {
+            tempConfirmPassword = val;
+            console.log(tempConfirmPassword);
+
+        }
+        if (tempConfirmPassword == this.state.password) {
+            // console.log('confirm password correct')
+            this.setState({ confirmPasswordError: false })
+            this.setState({ confirmPassword: val });
+
+        } else {
+            // console.log('confirm password is incorrect')
+            this.setState({ confirmPasswordError: true })
+            this.setState({ confirmPassword: '' })
+        }
     }
 
     onSubmitBtnPressed() {
-        if (this.state.password != this.state.confirmPassword) {
+        if (this.state.email == '') {
+            Alert.alert('email isn\'t correct or is empty');
+        }
+        else if (this.state.password == '') {
+            Alert.alert('password isn\'t correct or is empty');
+        }
+        else if (this.state.password != this.state.confirmPassword) {
             Alert.alert("Error", "Passwords don't match");
             return false;
+        } else {
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(this.state.email, this.state.password)
+                .then(() => this.props.navigation.navigate('Login'))
+                .catch(error => {
+                    Alert.alert("Registration error", error.message);
+                });
         }
-
-        firebase
-            .auth()
-            .createUserWithEmailAndPassword(this.state.email, this.state.password)
-            .then(() => this.props.navigation.navigate('Login'))
-            .catch(error => {
-                Alert.alert("Registration error", error.message);
-            });
     }
 
     goBack() {
@@ -78,7 +123,7 @@ export default class SignUpScreen extends React.Component {
                         alignItems: 'center'
                     }} source={require('../../../assets/ssh.png')} />
                     <Form style={style.form}>
-                        <Item stackedLabel style={style.textInput}>
+                        <Item error={this.state.emailError} success={!this.state.emailError} stackedLabel style={style.textInput}>
                             <Label>Email</Label>
                             <Input
                                 autoCapitalize="none"
@@ -88,7 +133,7 @@ export default class SignUpScreen extends React.Component {
                                     .onEmailInputChanged
                                     .bind(this)} />
                         </Item>
-                        <Item stackedLabel style={style.textInput}>
+                        <Item error={this.state.passwordError} success={!this.state.passwordError} stackedLabel style={style.textInput}>
                             <Label>Password</Label>
                             <Input
                                 autoCapitalize="none"
@@ -99,7 +144,7 @@ export default class SignUpScreen extends React.Component {
                                     .bind(this)}
                             />
                         </Item>
-                        <Item stackedLabel style={style.textInput}>
+                        <Item error={this.state.confirmPasswordError} success={!this.state.confirmPasswordError} stackedLabel style={style.textInput}>
                             <Label>Confirm password</Label>
                             <Input
                                 autoCapitalize="none"
@@ -109,8 +154,6 @@ export default class SignUpScreen extends React.Component {
                                     .onConfirmPwdInputChanged
                                     .bind(this)} />
                         </Item>
-                        <Text style={style.errorMessage}>Confirm password</Text>
-
                         <Button
                             block
                             primary
