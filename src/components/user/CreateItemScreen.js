@@ -10,7 +10,7 @@ console.disableYellowBox = true;
 
 export default class CreateItemScreen extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -28,7 +28,15 @@ export default class CreateItemScreen extends React.Component {
             SKU: null,
             review_video: null,
             description: null,
-            latlon: '42.667542,21.166191'
+            latlon: '42.667542,21.166191',
+            sellerError: false,
+            titleError: false,
+            priceError: false,
+            discountError: false,
+            vendorError: false,
+            SKUError: false,
+            review_videoError: false,
+            descriptionError: false
         };
     }
 
@@ -47,7 +55,6 @@ export default class CreateItemScreen extends React.Component {
 
             }
         }.bind(this));
-
     }
 
     async componentDidMount() {
@@ -65,7 +72,86 @@ export default class CreateItemScreen extends React.Component {
         return value.substr(value.lastIndexOf('/') + 1)
     }
 
-    onSubmit () {
+    onSellerInputChanged(seller) {
+
+        let regex = /^(\(?\+?[a-zA-z]*\)?)?[a-zA-z \(\)]*$/g;
+
+        if (regex.test(seller)) {
+            this.setState({ seller, sellerError: false });
+        }
+        else {
+            this.setState({ seller: '', sellerError: true })
+        }
+    }
+
+    onTitleChanged(title) {
+        let regex = /^(\(?\+?[a-zA-z]*\)?)?[a-zA-z_\- \(\)]*$/g;
+
+        if (regex.test(title) && title != '') {
+            this.setState({ title, titleError: false });
+        } else {
+            this.setState({ title: '', titleError: true })
+        }
+    }
+
+    onPriceInputChanged(price) {
+        let regex = /^(\(?\+?[0-9]*\)?)?[0-9 \(\)]*$/g;
+
+        if (regex.test(price) && price != '' && price < 3000) {
+            this.setState({ price, priceError: false });
+        } else {
+            this.setState({ price: '', priceError: true })
+        }
+    }
+
+    onDiscountInputChanged(discount) {
+        let regex = /^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$/g;
+
+        if (regex.test(discount) && discount < 1000) {
+            this.setState({ discount, discountError: false });
+        } else {
+            this.setState({ discount: '', discountError: true })
+        }
+    }
+
+    onVendorInputChanged(vendor) {
+        let regex = /^(\(?\+?[a-zA-Z]*\)?)?[a-zA-Z \(\)]*$/g;
+
+        if (regex.test(vendor) && vendor != '') {
+            this.setState({ vendor, vendorError: false });
+        } else {
+            this.setState({ vendor: '', vendorError: true })
+        }
+    }
+
+    onSKUInputChanged(SKU) {
+        if (SKU.length > 5) {
+            this.setState({ SKU, SKUError: false })
+        } else {
+            this.setState({ SKU: '', SKUError: true })
+        }
+    }
+
+    onDescriptionChanged(description) {
+        let regex = /^(\(?\+?[a-zA-Z0-9]*\)?)?[a-zA-Z0-9_\-_+_@_._,_*_/_!_?_ \(\)]*$/g;
+
+        if (regex.test(description) && description.length < 50) {
+            this.setState({ description, descriptionError: false })
+        } else {
+            this.setState({ description: '', descriptionError: true })
+        }
+    }
+
+    onReviewVideoChanged(review_video) {
+        let regex = /https:\/\/youtu.be\/?.*/img;
+        if (regex.test(review_video)) {
+            this.setState({ review_video, review_videoError: false })
+        } else {
+            this.setState({ review_video: '', review_videoError: false })
+        }
+    }
+
+    onSubmit() {
         if (!this.state.pickImageName) {
             Alert.alert("No image selected!", "Please pick an image from gallery or take a picture in order to create a product!");
             return;
@@ -76,6 +162,8 @@ export default class CreateItemScreen extends React.Component {
         }
         this._uploadImage();
     }
+
+
 
     render() {
         let { image } = this.state;
@@ -89,14 +177,14 @@ export default class CreateItemScreen extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                    <Title style={this.state.nightModeChecked ? NightStyleHeader.textStyle : DayStyleHeader.textStyle}>Create product</Title>
+                        <Title style={this.state.nightModeChecked ? NightStyleHeader.textStyle : DayStyleHeader.textStyle}>Create product</Title>
                     </Body>
-                    <Right/>
+                    <Right />
                 </Header>
                 <Content contentContainerStyle={this.state.nightModeChecked ? NightStyle.content : DayStyle.content}>
-                    <KeyboardAvoidingView behavior={'padding'} style={{flex:1}}>
+                    <KeyboardAvoidingView behavior={'padding'} style={{ flex: 1 }}>
 
-                        <Spinner visible={this.state.uploading} animation='fade' textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+                        <Spinner visible={this.state.uploading} animation='fade' textContent={"Loading..."} textStyle={{ color: '#FFF' }} />
 
                         {image ? null : (
                             <Text
@@ -106,32 +194,36 @@ export default class CreateItemScreen extends React.Component {
                         )}
 
                         <Form style={style.form}>
-                            <Button full primary style={{marginTop:5, marginBottom:5}} onPress={() => this._pickImage()}><Text>Pick an image from camera roll</Text></Button>
+                            <Button full primary style={{ marginTop: 5, marginBottom: 5 }} onPress={() => this._pickImage()}><Text>Pick an image from camera roll</Text></Button>
                             <Text></Text>
-                            <Button full success style={{marginTop:5, marginBottom:5}} onPress={() => this._takePhoto()} ><Text>Take a picture</Text></Button>
+                            <Button full success style={{ marginTop: 5, marginBottom: 5 }} onPress={() => this._takePhoto()} ><Text>Take a picture</Text></Button>
                             <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Image: {this.state.pickImageName ? this.state.pickImageName : "No image selected!"}</Text>
 
-                            <Item floatingLabel>
+                            {/*-----------------------------------------*/}
+                            <Button onPress={() => { console.log(this.state) }}><Text>Check states</Text></Button>
+                            {/*-----------------------------------------*/}
+
+                            <Item error={this.state.sellerError} floatingLabel>
                                 <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Seller name</Label>
                                 <Input
                                     style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={2} style={style.inputText}
-                                    onChangeText={(seller) => this.setState({ seller })}
-                                    value={this.state.seller}
+                                    onChangeText={this.onSellerInputChanged.bind(this)}
+                                // value={this.state.seller}
                                 />
                             </Item>
 
-                            <Item floatingLabel>
+                            <Item error={this.state.titleError} floatingLabel>
                                 <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Product title</Label>
                                 <Input
                                     style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
-                                    key={3}  style={style.inputText}
-                                    onChangeText={(title) => this.setState({ title })}
-                                    value={this.state.title}
+                                    key={3} style={style.inputText}
+                                    onChangeText={this.onTitleChanged.bind(this)}
+                                // value={this.state.title}
                                 />
                             </Item>
 
-                            <Item style={{marginTop:15}}>
+                            <Item style={{ marginTop: 15 }}>
                                 <Picker
                                     style={this.state.nightModeChecked ? NightStyle.pickerStyle : NightStyle.pickerStyle}
                                     iosHeader="Select City:"
@@ -139,70 +231,71 @@ export default class CreateItemScreen extends React.Component {
                                     onValueChange={(latlon) => this.onLatLonChange(latlon)}
                                     selectedValue={this.state.latlon}
                                 >
-                                    <Picker.Item label="Prishtine" value="42.667542,21.166191" style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}/>
-                                    <Picker.Item label="Prizren" value="42.215260,20.741474" style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}/>
-                                    <Picker.Item label="Gjilan" value="42.463486,21.468315" style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}/>
+                                    <Picker.Item label="Prishtine" value="42.667542,21.166191" style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle} />
+                                    <Picker.Item label="Prizren" value="42.215260,20.741474" style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle} />
+                                    <Picker.Item label="Gjilan" value="42.463486,21.468315" style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle} />
                                 </Picker>
                             </Item>
 
-                            <Item floatingLabel>
+                            <Item error={this.state.priceError} success={!this.state.priceError} floatingLabel>
                                 <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Price</Label>
                                 <Input
                                     style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={4} style={style.inputText}
-                                    onChangeText={(price) => this.setState({ price:price })}
-                                    value={this.state.price}
+                                    onChangeText={this.onPriceInputChanged.bind(this)}
+                                // value={this.state.price}
                                 />
                             </Item>
 
-                            <Item floatingLabel>
+                            <Item error={this.state.discountError} success={!this.state.discountError} floatingLabel>
                                 <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Discount</Label>
                                 <Input
                                     style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={5} style={style.inputText}
-                                    onChangeText={(discount) => this.setState({ discount })}
-                                    value={this.state.discount}
+                                    onChangeText={this.onDiscountInputChanged.bind(this)}
+                                // value={this.state.discount}
+
                                 />
                             </Item>
 
-                            <Item floatingLabel>
+                            <Item error={this.state.vendorError} success={!this.state.vendorError} floatingLabel>
                                 <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Vendor</Label>
                                 <Input
                                     style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={6} style={style.inputText}
-                                    onChangeText={(vendor) => this.setState({ vendor })}
-                                    value={this.state.vendor}
+                                    onChangeText={this.onVendorInputChanged.bind(this)}
+                                // value={this.state.vendor}
                                 />
                             </Item>
 
-                            <Item floatingLabel>
+                            <Item error={this.state.SKUError} success={!this.state.SKUError} floatingLabel>
                                 <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>SKU</Label>
                                 <Input
                                     style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={7} style={style.inputText}
-                                    onChangeText={(SKU) => this.setState({ SKU })}
-                                    value={this.state.SKU}
+                                    onChangeText={this.onSKUInputChanged.bind(this)}
+                                // value={this.state.SKU}
                                 />
                             </Item>
 
-                            <Item floatingLabel>
+                            <Item error={this.state.review_videoError} floatingLabel>
                                 <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Review (paste YouTube link)</Label>
                                 <Input
                                     style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
                                     key={8} style={style.inputText}
-                                    onChangeText={(review_video) => this.setState({ review_video })}
-                                    value={this.state.review_video}
+                                    onChangeText={this.onReviewVideoChanged.bind(this)}
+                                // value={this.state.review_video}
                                 />
                             </Item>
-                            <Item floatingLabel>
+                            <Item error={this.state.descriptionError} floatingLabel>
                                 <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Product description</Label>
                                 <Input
                                     multiline={true}
                                     rowSpan={5}
                                     style={this.state.nightModeChecked ? NightStyle.textArea : DayStyle.textArea}
                                     key={9} style={style.inputText}
-                                    onChangeText={(description) => this.setState({ description })}
-                                    value={this.state.description}
+                                    onChangeText={this.onDescriptionChanged.bind(this)}
+                                // value={this.state.description}
                                 />
                             </Item>
                         </Form>
@@ -312,7 +405,7 @@ const style = StyleSheet.create({
     },
 
     text: {
-        color:'#fff',
+        color: '#fff',
     },
     button: {
         width: "70%",
@@ -333,31 +426,31 @@ const DayStyle = StyleSheet.create({
         padding: 10
     },
     buttons:
-        {
-        },
+    {
+    },
     textStyle:
-        {
-            color: 'black'
-        },
+    {
+        color: 'black'
+    },
     textArea:
-        {
-            color: 'black',
-            height: 200
-        },
+    {
+        color: 'black',
+        height: 200
+    },
     labelStyle:
-        {
-            color: '#888'
-        },
+    {
+        color: '#888'
+    },
     pickerStyle:
-        {
-            height: 50,
-            marginTop: 10,
-            borderWidth: 1,
-            borderColor: "#ebebeb"
-        },
+    {
+        height: 50,
+        marginTop: 10,
+        borderWidth: 1,
+        borderColor: "#ebebeb"
+    },
     cardStyle: {
     },
-    price:{
+    price: {
         fontSize: 25
     }
 });
@@ -373,31 +466,31 @@ const NightStyle = StyleSheet.create({
         backgroundColor: '#303033'
     },
     buttons:
-        {
-        },
+    {
+    },
     textStyle:
-        {
-            color: 'white'
-        },
+    {
+        color: 'white'
+    },
     textArea:
-        {
-            color: 'white',
-            height: 200
-        },
+    {
+        color: 'white',
+        height: 200
+    },
     cardStyle: {
         backgroundColor: '#303033',
         borderColor: "#333"
     },
     labelStyle:
-        {
-            color: 'white'
-        },
+    {
+        color: 'white'
+    },
     pickerStyle:
-        {
-            height: 50,
-            borderWidth: 1,
-            borderColor: "#ebebeb"
-        },
+    {
+        height: 50,
+        borderWidth: 1,
+        borderColor: "#ebebeb"
+    },
     price: {
         fontSize: 25,
         color: "white"
