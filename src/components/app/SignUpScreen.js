@@ -17,7 +17,7 @@ export default class SignUpScreen extends React.Component {
     }
 
     componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', function() {
+        BackHandler.addEventListener('hardwareBackPress', function () {
             this.goBack();
             return true;
         }.bind(this));
@@ -62,19 +62,21 @@ export default class SignUpScreen extends React.Component {
                         <Button
                             transparent
                             onPress={this.goBack.bind(this)}>
-                            <Icon name='arrow-back'/>
+                            <Icon name='arrow-back' />
                         </Button>
                     </Left>
                     <Body>
-                    <Title>Sign up</Title>
+                        <Title>Sign up</Title>
                     </Body>
-                    <Right/>
+                    <Right />
                 </Header>
                 <Content contentContainerStyle={style.content}>
-                    <Image style={{height: 180,
+                    <Image style={{
+                        height: 180,
                         width: 180,
                         justifyContent: 'center',
-                        alignItems: 'center'}} source={require('../../../assets/ssh.png')} />
+                        alignItems: 'center'
+                    }} source={require('../../../assets/ssh.png')} />
                     <Form style={style.form}>
                         <Item stackedLabel style={style.textInput}>
                             <Label>Email</Label>
@@ -84,7 +86,7 @@ export default class SignUpScreen extends React.Component {
                                 style={style.textInput}
                                 onChangeText={this
                                     .onEmailInputChanged
-                                    .bind(this)}/>
+                                    .bind(this)} />
                         </Item>
                         <Item stackedLabel style={style.textInput}>
                             <Label>Password</Label>
@@ -94,7 +96,8 @@ export default class SignUpScreen extends React.Component {
                                 secureTextEntry
                                 onChangeText={this
                                     .onPasswordInputChanged
-                                    .bind(this)}/>
+                                    .bind(this)}
+                            />
                         </Item>
                         <Item stackedLabel style={style.textInput}>
                             <Label>Confirm password</Label>
@@ -104,8 +107,10 @@ export default class SignUpScreen extends React.Component {
                                 secureTextEntry
                                 onChangeText={this
                                     .onConfirmPwdInputChanged
-                                    .bind(this)}/>
+                                    .bind(this)} />
                         </Item>
+                        <Text style={style.errorMessage}>Confirm password</Text>
+
                         <Button
                             block
                             primary

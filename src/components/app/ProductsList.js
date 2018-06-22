@@ -143,7 +143,7 @@ const DayStyle = StyleSheet.create({
     },
     textStyle:
     {
-        color: 'black'
+        color: 'black',
     },
     cardStyle: {
     },
