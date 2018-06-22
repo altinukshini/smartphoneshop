@@ -76,21 +76,21 @@ export default class CreateItemScreen extends React.Component {
 
         let regex = /^(\(?\+?[a-zA-z]*\)?)?[a-zA-z \(\)]*$/g;
 
-        if (regex.test(seller)) {
+        if (regex.test(seller) && seller.length > 3) {
             this.setState({ seller, sellerError: false });
         }
         else {
-            this.setState({ seller: '', sellerError: true })
+            this.setState({ seller: null, sellerError: true })
         }
     }
 
     onTitleChanged(title) {
-        let regex = /^(\(?\+?[a-zA-z]*\)?)?[a-zA-z_\- \(\)]*$/g;
+        let regex = /^(\(?\+?[a-zA-z0-9]*\)?)?[a-zA-z0-9_\- \(\)]*$/g;
 
         if (regex.test(title) && title != '') {
             this.setState({ title, titleError: false });
         } else {
-            this.setState({ title: '', titleError: true })
+            this.setState({ title: null, titleError: true })
         }
     }
 
@@ -100,7 +100,7 @@ export default class CreateItemScreen extends React.Component {
         if (regex.test(price) && price != '' && price < 3000) {
             this.setState({ price, priceError: false });
         } else {
-            this.setState({ price: '', priceError: true })
+            this.setState({ price: null, priceError: true })
         }
     }
 
@@ -110,7 +110,7 @@ export default class CreateItemScreen extends React.Component {
         if (regex.test(discount) && discount < 1000) {
             this.setState({ discount, discountError: false });
         } else {
-            this.setState({ discount: '', discountError: true })
+            this.setState({ discount: null, discountError: true })
         }
     }
 
@@ -120,7 +120,7 @@ export default class CreateItemScreen extends React.Component {
         if (regex.test(vendor) && vendor != '') {
             this.setState({ vendor, vendorError: false });
         } else {
-            this.setState({ vendor: '', vendorError: true })
+            this.setState({ vendor: null, vendorError: true })
         }
     }
 
@@ -128,7 +128,7 @@ export default class CreateItemScreen extends React.Component {
         if (SKU.length > 5) {
             this.setState({ SKU, SKUError: false })
         } else {
-            this.setState({ SKU: '', SKUError: true })
+            this.setState({ SKU: null, SKUError: true })
         }
     }
 
@@ -138,7 +138,7 @@ export default class CreateItemScreen extends React.Component {
         if (regex.test(description) && description.length < 251) {
             this.setState({ description, descriptionError: false })
         } else {
-            this.setState({ description: '', descriptionError: true })
+            this.setState({ description: null, descriptionError: true })
         }
     }
 
@@ -147,7 +147,7 @@ export default class CreateItemScreen extends React.Component {
         if (regex.test(review_video)) {
             this.setState({ review_video, review_videoError: false })
         } else {
-            this.setState({ review_video: '', review_videoError: false })
+            this.setState({ review_video: null, review_videoError: false })
         }
     }
 
@@ -162,8 +162,6 @@ export default class CreateItemScreen extends React.Component {
         }
         this._uploadImage();
     }
-
-
 
     render() {
         let { image } = this.state;
