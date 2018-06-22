@@ -135,7 +135,7 @@ export default class CreateItemScreen extends React.Component {
     onDescriptionChanged(description) {
         let regex = /^(\(?\+?[a-zA-Z0-9]*\)?)?[a-zA-Z0-9_\-_+_@_._,_*_/_!_?_ \(\)]*$/g;
 
-        if (regex.test(description) && description.length < 50) {
+        if (regex.test(description) && description.length < 251) {
             this.setState({ description, descriptionError: false })
         } else {
             this.setState({ description: '', descriptionError: true })
@@ -200,10 +200,10 @@ export default class CreateItemScreen extends React.Component {
                             <Text style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Image: {this.state.pickImageName ? this.state.pickImageName : "No image selected!"}</Text>
 
                             {/*-----------------------------------------*/}
-                            <Button onPress={() => { console.log(this.state) }}><Text>Check states</Text></Button>
+                            {/* <Button onPress={() => { console.log(this.state) }}><Text>Check states</Text></Button> */}
                             {/*-----------------------------------------*/}
 
-                            <Item error={this.state.sellerError} floatingLabel>
+                            <Item error={this.state.sellerError} success={!this.state.sellerError} floatingLabel>
                                 <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Seller name</Label>
                                 <Input
                                     style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
@@ -213,7 +213,7 @@ export default class CreateItemScreen extends React.Component {
                                 />
                             </Item>
 
-                            <Item error={this.state.titleError} floatingLabel>
+                            <Item error={this.state.titleError} success={!this.state.titleError} floatingLabel>
                                 <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Product title</Label>
                                 <Input
                                     style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
@@ -277,8 +277,7 @@ export default class CreateItemScreen extends React.Component {
                                 // value={this.state.SKU}
                                 />
                             </Item>
-
-                            <Item error={this.state.review_videoError} floatingLabel>
+                            <Item error={this.state.review_videoError} success={!this.state.review_videoError} floatingLabel>
                                 <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Review (paste YouTube link)</Label>
                                 <Input
                                     style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}
@@ -287,7 +286,7 @@ export default class CreateItemScreen extends React.Component {
                                 // value={this.state.review_video}
                                 />
                             </Item>
-                            <Item error={this.state.descriptionError} floatingLabel>
+                            <Item error={this.state.descriptionError} success={!this.state.descriptionError} floatingLabel>
                                 <Label style={this.state.nightModeChecked ? NightStyle.textStyle : DayStyle.textStyle}>Product description</Label>
                                 <Input
                                     multiline={true}
